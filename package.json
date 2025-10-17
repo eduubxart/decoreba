@@ -7,9 +7,16 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "frontend": "vite public",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build"
   },
-  "keywords": ["jogo", "memória", "simon", "frontend", "decoreba"],
+  "keywords": [
+    "jogo",
+    "memória",
+    "simon",
+    "frontend",
+    "decoreba"
+  ],
   "author": "Eduardo Faria Braga",
   "license": "ISC",
   "description": "Jogo Decoreba - versão moderna do clássico Simon Game",
@@ -19,6 +26,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
-    "vite": "^7.1.9"
+    "vite": "^7.1.10"
   }
 }
