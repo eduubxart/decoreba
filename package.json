@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "frontend": "npx vite",
+    "frontend": "vite",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx vite build"
+    "build": "vite build"
   },
   "keywords": [
     "jogo",
@@ -27,5 +27,8 @@
   "devDependencies": {
     "nodemon": "^3.1.10",
     "vite": "^7.1.10"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
