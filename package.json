@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "frontend": "npx vite --root src/public",
+    "frontend": "npx vite",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx vite build --root src/public"
+    "build": "npx vite build"
   },
   "keywords": [
     "jogo",
