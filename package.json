@@ -1,13 +1,11 @@
 {
   "name": "decoreba",
   "version": "1.0.0",
-  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "jogo",
@@ -18,13 +16,8 @@
   ],
   "author": "Eduardo Faria Braga",
   "license": "ISC",
-  "description": "Jogo Decoreba - versão moderna do clássico Simon Game",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "nodemon": "^3.1.10",
     "vite": "^7.1.10"
   },
   "engines": {

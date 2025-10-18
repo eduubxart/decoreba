@@ -103,24 +103,33 @@ main {
   color: white;
   text-transform: uppercase;
 }
-
-/* PAINEL DE PONTUAÇÃO */
+/*painel de pontuação multiplayer*/
 .painel {
   margin-top: 25px;
-  display: flex;
-  gap: 25px;
+  display : flex;
+  gap: 20px;
   text-align: center;
+  flex-wrap: wrap;
 }
 
-.painel div {
-  background: rgba(255, 255, 255, 0.1);
+.painel-jogador {
+  background: #222;
   padding: 10px 15px;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
-.painel p {
-  margin: 5px;
-  font-size: 10px;
+.painel-jogador p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+.pontuação-atual {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00ff00;
+}
+.melhor-pontuação {
+  font-size: 14px;
+  color: #ffcc00;
 }
 
 /* FOOTER */
