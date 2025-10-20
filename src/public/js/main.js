@@ -47,8 +47,8 @@ const mostrarSequencia = (i = 0) => {
         mostrarSequencia(i + 1);
       } else {
         esperandoResposta = true;
-        controleFundo.style.backgroundColor = 'lightblue';
-        controleTexto.innerText = `jogador ${jogadorAtual + 1}, é sua vez!`;
+        controleFundo.style.backgroundColor = 'purple';
+        controleTexto.innerText = `jogue!`;
       }
     }, 600);
   }, 600);
@@ -58,8 +58,8 @@ const mostrarSequencia = (i = 0) => {
 const novaRodada = () => {
   const jogador = Jogadores[jogadorAtual];
   jogador.respostaJogador = [];
-  controleFundo.style.backgroundColor = 'yellow';
-  controleTexto.innerText = `jogador ${jogadorAtual + 1}, observe `;
+  controleFundo.style.backgroundColor = 'purple';
+  controleTexto.innerText = `aguarde `;
 
   const novoBotao = aleatorio(Array.from(botoes));
   jogador.sequencia.push(novoBotao);
@@ -71,12 +71,13 @@ const novaRodada = () => {
 // Atualiza pontuação
 const atualizarPontuacao = () => {
   Jogadores.forEach((jogador, index) => {
-    const el = document.getElementById(`pontuacao-jogador-${index + 1}`);
-    if (el) {
-      el.innerText = jogador.pontuacao;
-    }
-  });
-};
+    const elPontuacao = document.getElementById(`pontuacao-atual-jogador-${index + 1}`);
+    const elMelhor = document.getElementById(`melhor-pontuacao-jogador-${index + 1}`);
+
+    if (elPontuacao) elPontuacao.innerText = jogador.pontuacao;
+    if (elMelhor) elMelhor.innerText = jogador.melhorPontuacao;
+    })
+  };
 
 // Verifica respostas
 const verificarRespostas = () => {
@@ -84,25 +85,24 @@ const verificarRespostas = () => {
   esperandoResposta = false;
   
   const acertouTudo = jogador.respostaJogador.every(
-  (res, idx) => res === jogador.sequencia[idx]
+  (res, idx) => res.id === jogador.sequencia[idx].id
 );
 
   if (acertouTudo) {
     jogador.pontuacao++;
     nivel++;
     controleFundo.style.backgroundColor = 'green';
-    controleTexto.innerText = `jogador ${jogadorAtual + 1} Acertou!`;
+    controleTexto.innerText = `Acertou!`;
 
     // Passa para o próximo jogador
     jogadorAtual = (jogadorAtual + 1) % totalJogadores;
     setTimeout(() => novaRodada(), 1200);
   } else {
     controleFundo.style.backgroundColor = 'red';
-    controleTexto.innerText = `jogador ${jogadorAtual + 1} Errou! Jogo Reiniciado.`;
+    controleTexto.innerText = `Errou!`;
 
-    jogador.melhorPontuacao = Math.max(jogador.melhorPontuacao, 
-     jogador.pontuacao);
-    reiniciarJogo();
+    jogador.melhorPontuacao = Math.max(jogador.melhorPontuacao,jogador.pontuacao);
+    setTimeout(() => reiniciarJogo(), 1500);
   }
   atualizarPontuacao();
 };
@@ -135,7 +135,7 @@ const reiniciarJogo = () => {
   jogadorAtual = 0;
   podeComecar = true;
   controleFundo.style.backgroundColor = 'lightgray';
-  controleTexto.innerText = 'Clique para começar!';
+  controleTexto.innerText = 'game over';
   atualizarPontuacao();
 };
 // ======================

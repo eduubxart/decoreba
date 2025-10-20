@@ -67,7 +67,7 @@ main {
 }
 
 /* Botão central (Start) */
-.container-conttrole-centro-jogo {
+.container-controle-centro-jogo {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -104,7 +104,8 @@ main {
   text-transform: uppercase;
 }
 /*painel de pontuação multiplayer*/
-.painel {
+.painel { 
+  justify-content: space-between;
   margin-top: 25px;
   display : flex;
   gap: 20px;
@@ -112,22 +113,26 @@ main {
   flex-wrap: wrap;
 }
 
-.painel-jogador {
+.painel-jogador {  
+ 
   background: #222;
   padding: 10px 15px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
 }
 .painel-jogador p {
-  margin: 5px 0;
+  margin: 6px 0;
   font-size: 14px;
+
+ 
 }
-.pontuação-atual {
+.pontuacao-atual {
   font-size: 18px;
   font-weight: bold;
   color: #00ff00;
 }
-.melhor-pontuação {
+.melhor-pontuacao {
   font-size: 14px;
   color: #ffcc00;
 }

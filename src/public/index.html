@@ -11,18 +11,33 @@
   <header>
     <h1>Decoreba</h1>
     <h2>Jogo de memória</h2>
-    <div class="painel-jogador">
-        <p id="vez-do-jogador">Sua vez</p>
-        <p>jogador 1: <span id="pontuacao1">0</span></p>
-        <p>jogador 2: <span id="pontuacao2">0</span></p>
-    </div> 
-    <main>
-    <section class ="jogo">
-      <div class=" clicavel-canto-esquerdo cima" id="vermelho"></div>
-      <div class="clicavel-canto-direito cima" id="azul"></div>
+    <div>
+        <p>NIVEL</p>
+        <p class ="nivel" id="nivel">0</p>
+    </div>
+    <section class="painel">
+        <div class="painel-jogador" id="jogador 1">
+          <p>jogador1</p>
+          <p>pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-1">0</span></p>
+          <p>melhor: <span class="melhor-pontuacao" id="melhor-pontuacao-jogador-1">0</span></p>
+        </div>
 
-      <div class="clicavel-canto-esquerdo baixo" id="amarelo"></div>
-      <div class="clicavel-canto-direito baixo" id="verde"></div>
+        <div class="painel-jogador" id="jogador 2">
+          <p>jogador2</p>
+          <p>pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-2">0</span></p>
+          <p>melhor: <span class="melhor-pontuacao" id="melhor-pontuacao-jogador-2">0</span></p>
+        </div>
+
+        
+      </section>
+
+    <main>
+      <section class ="jogo">
+        <div class=" clicavel-canto-esquerdo cima" id="vermelho"></div>
+        <div class="clicavel-canto-direito cima" id="azul"></div>
+
+        <div class="clicavel-canto-esquerdo baixo" id="amarelo"></div>
+        <div class="clicavel-canto-direito baixo" id="verde"></div>
 
       <div class="container-controle-centro-jogo">
         <div class="controle-centro-perfeito">
@@ -33,24 +48,7 @@
 
 
   </section>
-    <section class="painel">
-      <div class="painel-jogador" id="jogador1">
-        <p>jogador1</p>
-        <p>pontuação: <span class="pontuação-atual" id="pontuacão-atual-jogador1">0</span></p>
-        <p>melhor: <span class="melhor-pontuação" id="melhor-pontuação-jogador1">0</span></p>
-      </div>
-
-      <div class="painel-jogador" id="jogador2">
-        <p>jogador2</p>
-        <p>pontuação: <span class="pontuação-atual" id="pontuacão-atual-jogador2">0</span></p>
-        <p>melhor: <span class="melhor-pontuação" id="melhor-pontuação-jogador2">0</span></p>
-      </div>
-
-      <div>
-        <p>NIVEL</p>
-        <p class ="nivel" id="nivel">0</p>
-      </div>
-    </section>
+    
     <footer>
       <p>conheça meu github</p>
       <a href="https://github.com/eduubxart" target="_blank">
