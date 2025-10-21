@@ -1,4 +1,6 @@
-/* GERAL */
+/* =========================
+   🎮 ESTILO GERAL
+========================= */
 body {
   font-family: 'Press Start 2P', cursive;
   background-color: #1a1a1a;
@@ -7,149 +9,287 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+
+/* =========================
+   🧢 CABEÇALHO
+========================= */
+.container-titulo {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.titulo {
+  font-size: 48px;
+  animation: rainbow 7s infinite;
+  margin-bottom: 5px;
+}
+
+.subtitulo {
+  font-size: 14px;
+  color: #ccc;
+  margin: 0;
+}
+
+@keyframes rainbow {
+  10% { color: #ff0040; }
+  40% { color: #ffcc00; }
+  60% { color: #00ff90; }
+  100% { color: #00bfff; }
+}
+
+/* =========================
+   🧩 CONTAINER GERAL
+========================= */
+.container-geral {
+  display: flex;
   justify-content: center;
-  height: 100vh;
+  align-items: flex-start;
+  gap: 60px;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 1200px;
 }
 
-h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
+/* =========================
+   🏆 RANKING LATERAL ESQUERDA
+========================= */
+.container-ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #222;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  width: 200px;
+  text-align: left;
+  height: 100%;
+}
+
+.titulo-ranking {
   text-align: center;
-  
-
+  width: 100%;
+  margin-bottom: 15px;
+  color: #7fff00; /* verde neon suave */
+  font-size: 14px;
 }
 
-h2 {
-  margin: 10px 0;
-  font-size: 18px;
-  text-align: center;
+.bloco-jogador {
+  width: 100%;
+  background: #111;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  transition: 0.3s;
 }
 
-main {
+.bloco-jogador.ativo {
+  border-color: #7fff00;
+  box-shadow: 0 0 10px #7fff00 inset;
+}
+
+.bloco-jogador p {
+  margin: 6px 0;
+  font-size: 12px;
+}
+
+.pontuacao-atual {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.melhor-pontuacao {
+  font-size: 12px;
+  color: #ffcc00;
+}
+
+/* =========================
+   🎯 ÁREA CENTRAL DO JOGO
+========================= */
+.container-jogo {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* JOGO */
-.jogo {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
+.area-jogo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 500px;
+  height: 500px;
   background: #111;
-  position: relative;
+  border-radius: 25px; /* leve arredondado */
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Botões coloridos */
-.clicavel-canto-esquerdo, .clicavel-canto-direito {
-  width: 45%;
-  height: 45%;
-  opacity: 0.5;
-  transition: 0.3s;
+/* =========================
+   🎯 QUADRADOS COLORIDOS + ÍCONES
+========================= */
+
+/* Cada botão colorido */
+#vermelho,
+#azul,
+#amarelo,
+#verde {
+  position: relative;
+  border-radius: 12px;
+  opacity: 0.95;
   cursor: pointer;
+  transition: transform 0.2s, filter 0.3s, box-shadow 0.3s;
 }
 
-.cima#vermelho { border-top-left-radius: 100% 100%; background: red; }
-.cima#azul { border-top-right-radius: 100% 100%; background: blue; }
-.baixo#amarelo { border-bottom-left-radius: 100% 100%; background: yellow; }
-.baixo#verde { border-bottom-right-radius: 100% 100%; background: green; }
+/* Cores vibrantes */
+#vermelho {
+  background: linear-gradient(145deg, #7a0000, #ff0000);
+}
+#azul {
+  background: linear-gradient(145deg, #002c7a, #0077ff);
+}
+#amarelo {
+  background: linear-gradient(145deg, #7a6e00, #ffee00);
+}
+#verde {
+  background: linear-gradient(145deg, #004d00, #00ff40);
+}
 
+/* IMAGENS CENTRAIS (ícones) */
+.clicavel-canto-esquerdo::after,
+.clicavel-canto-direito::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 2;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Caminhos dos ícones */
+#vermelho::after {
+  background-image: url("../img/icone-vermelho.png");
+}
+#azul::after {
+  background-image: url("../img/icone-azul.png");
+}
+#amarelo::after {
+  background-image: url("../img/icone-amarelo.png");
+}
+#verde::after {
+  background-image: url("../img/icone-verde.png");
+}
+
+/* Quando botão acende */
 .clicavel-canto-esquerdo.ativo,
 .clicavel-canto-direito.ativo {
-  opacity: 1;
-  filter: brightness(1.3);
+  filter: brightness(2);
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(255,255,255,0.5);
 }
 
-/* Botão central (Start) */
-.container-controle-centro-jogo {
+/* Ícones com animação de brilho */
+.clicavel-canto-esquerdo.ativo::after,
+.clicavel-canto-direito.ativo::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  filter: drop-shadow(0 0 15px rgba(255,255,255,0.9));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+
+/* =========================
+   BOTÃO CENTRAL (START)
+========================= */
+.container-botao-central {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.controle-centro-perfeito {
+.botao-central {
   background: #222;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 160px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7);
   cursor: pointer;
+  z-index: 10;
 }
 
-.controle-centro-perfeito .fundo {
+.botao-central .fundo {
   position: absolute;
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: #555;
   transition: background 0.3s;
+  z-index: 1;
 }
 
-.controle-centro-perfeito p {
+.botao-central p {
   position: relative;
-  z-index: 2;
   font-size: 10px;
   color: white;
   text-transform: uppercase;
-}
-/*painel de pontuação multiplayer*/
-.painel { 
-  justify-content: space-between;
-  margin-top: 25px;
-  display : flex;
-  gap: 20px;
-  text-align: center;
-  flex-wrap: wrap;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.painel-jogador {  
- 
+/* =========================
+   📊 NÍVEL
+========================= */
+.container-nivel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: #222;
-  padding: 10px 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  height: fit-content;
+  margin-top: 150px; /* ajusta pra ficar centralizado verticalmente ao lado do jogo */
+  width: 120px;
 }
-.painel-jogador p {
-  margin: 6px 0;
-  font-size: 14px;
 
- 
-}
-.pontuacao-atual {
-  font-size: 18px;
-  font-weight: bold;
+.container-nivel p {
+  margin: 5px 0;
+  font-size: 12px;
   color: #00ff00;
 }
-.melhor-pontuacao {
-  font-size: 14px;
-  color: #ffcc00;
-}
 
-/* FOOTER */
-footer {
-  position: absolute;
-  bottom: 15px;
+/* =========================
+   👟 RODAPÉ
+========================= */
+.container-rodape {
+  margin-top: 40px;
   text-align: center;
 }
 
-footer p {
+.container-rodape p {
   font-size: 10px;
   margin: 0;
 }
 
-footer .github {
+.container-rodape .github {
   width: 30px;
   height: 30px;
   margin-top: 5px;
@@ -157,3 +297,6 @@ footer .github {
   transition: 0.3s;
 }
 
+.container-rodape .github:hover {
+  transform: scale(1.1);
+}
