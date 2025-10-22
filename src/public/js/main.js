@@ -9,8 +9,11 @@ const controleTexto = document.querySelector('.botao-central p');
 const nivelElement = document.getElementById('nivel');
 
 // Variáveis de controle do jogo
+const btnInciar = document.getElementById('btn-iniciar');
+const mensagemJogador = document.getElementById('mensagem-jogador');
 const totalJogadores = 2; 
 const Jogadores = Array.from({ length: totalJogadores }, () => ({
+  nome: '',
   sequencia: [],
   respostaJogador: [],
   pontuacao: 0,
@@ -159,3 +162,32 @@ botoes.forEach((botao) => {
     }
   };
 });
+// ======================
+// EVENTO NOVO: INICIAR JOGO COM INPUTS
+// ======================
+const btnIniciar = document.getElementById('btn-iniciar');
+
+btnIniciar.onclick = () => {
+  const nome1 = document.getElementById('nome-jogador-1').value.trim();
+  const nome2 = document.getElementById('nome-jogador-2').value.trim();
+
+  // Salva os nomes nos objetos dos jogadores
+  Jogadores[0].nome = nome1 || "Jogador 1";
+  Jogadores[1].nome = nome2 || "Jogador 2";
+
+  // Atualiza o ranking lateral
+  document.querySelector('#jogador-1 p:first-child').innerText = Jogadores[0].nome;
+  document.querySelector('#jogador-2 p:first-child').innerText = Jogadores[1].nome;
+
+  // Atualiza a mensagem central
+  atualizarMensagemJogador();
+
+  // Esconde o overlay
+  document.getElementById('overlay-nomes').style.display = 'none';
+
+  // Começa a primeira rodada
+  novaRodada();
+  podeComecar = false;
+};
+
+

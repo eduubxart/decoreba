@@ -9,10 +9,23 @@
 </head>
 <body>
   
-  <!-- TÍTULO -->
-  <div class="container-titulo">
-    <p class="titulo">Decoreba</p>
-    <p class="subtitulo">Jogo de Memória</p>
+  <!-- Overlay para digitar os nomes -->
+  <div class="overlay-nomes" id="overlay-nomes">
+    <p class="titulo-overlay">Decoreba</p>
+    <p class="subtitulo-overlay">Jogo de Memória</p>
+
+    <div class="container-lateral-nomes">
+      <div class="jogador">
+        <p>Jogador 1</p>
+        <input type="text" id="nome-jogador-1" placeholder="Nome do Jogador 1">
+      </div>
+      <div class="jogador">
+        <p>Jogador 2</p>
+        <input type="text" id="nome-jogador-2" placeholder="Nome do Jogador 2">
+      </div>
+    </div>
+
+    <button id="btn-iniciar">JOGUE</button>
   </div>
 
   <!-- CONTAINER GERAL -->
@@ -37,6 +50,9 @@
     
     <!-- ÁREA CENTRAL DO JOGO -->
     <div class="container-jogo">
+      <!-- Mensagem do jogador ativo acima da grid -->
+      <p id="mensagem-jogador" class="mensagem-jogador">Jogador 1, sua vez!</p>
+
       <div class="area-jogo">
         <div class="clicavel-canto-esquerdo cima" id="vermelho"></div>
         <div class="clicavel-canto-direito cima" id="azul"></div>
@@ -46,7 +62,7 @@
         <div class="container-botao-central">
           <div class="botao-central">
             <div class="fundo"></div>
-            <p>start</p>
+            <p>START</p>
           </div>
         </div>
       </div>
