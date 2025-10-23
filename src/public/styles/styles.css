@@ -1,7 +1,15 @@
 /* =========================
    🎮 ESTILO GERAL
 ========================= */
+
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
 body {
+  width: 100%;
+  height: 100%;
   font-family: 'Press Start 2P', cursive;
   background-color: #1a1a1a;
   color: #fff;
@@ -10,21 +18,22 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh;
 }
 
 /* =========================
    🧩 CONTAINER GERAL
 ========================= */
+/* Container geral */
 .container-geral {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center; /* centraliza verticalmente */
   gap: 60px;
   margin-top: 50px;
   width: 100%;
   max-width: 1200px;
 }
+
 
 /* =========================
    🏆 RANKING LATERAL ESQUERDA
@@ -57,12 +66,12 @@ body {
   margin-bottom: 10px;
   border-radius: 10px;
   border: 2px solid transparent;
-  transition: 0.3s;
 }
 
 .bloco-jogador.ativo {
   border-color: #7fff00;
   box-shadow: 0 0 10px #7fff00 inset;
+  
 }
 
 .bloco-jogador p {
@@ -71,22 +80,34 @@ body {
 }
 
 .pontuacao-atual {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: bold;
   color: #00ff00;
+ 
+}
+/* =========================
+   📊 NÍVEL
+========================= */
+.container-nivel {
+  width: 100%;
+  background: #111;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 20px solid transparent;
 }
 
-.melhor-pontuacao {
+.container-nivel p {
+  margin: 5px 0;
   font-size: 12px;
-  color: #ffcc00;
+  color: #00fd00;
 }
-
 /* =========================
    🎯 ÁREA CENTRAL DO JOGO
 ========================= */
 .container-jogo {
   display: flex;
-  flex-direction: column;
+  flex-direction: center;
   align-items: center;
   justify-content: center;
 }
@@ -226,23 +247,7 @@ body {
   pointer-events: none;
   z-index: 2;
 }
-
-.overlay-nomes {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.85);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  z-index: 100;
-}
-/* Overlay para digitar nomes */
-.overlay-nomes {
+.nomesjogadores {
   position: fixed;
   top: 0;
   left: 0;
@@ -256,31 +261,95 @@ body {
   gap: 30px;
   z-index: 100;
   padding: 20px;
+  transition: opacity 0.5s ease;
 }
 
-.titulo-overlay {
+/* Bloco do título com avatar e estrelas */
+.titulo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   font-family: 'Press Start 2P', cursive;
-  font-size: 48px;
-  animation: rainbow 7s infinite;
-  margin-bottom: 10px;
-  text-align: center;
+  flex-direction: column; /* empilha título e subtítulo verticalmente */
+  align-items: center;    /* centraliza horizontalmente */   
 }
 
-.subtitulo-overlay {
-  font-family: 'Press Start 2P', cursive;
+/* Título rainbow */
+.titulo .title {
+  font-size: 80px;      /* título gigante */
+  letter-spacing: 6px;
+  animation: rainbow 5s infinite;
+  position: relative;
+  z-index: 2;
+  
+}
+
+.subtitulo {
   font-size: 16px;
   color: #ccc;
-  text-align: center;
-  margin-bottom: 30px;
+  text-align: left;       /* subtítulo lateralizado */
+  width: 100%;
+  margin: 0;
+  padding-left: 20px;     /* ajusta distância da lateral */
+}
+
+/* Estrelas ao lado do título */
+.star-left, .star-right {
+  font-size: 50px;
+  position: absolute;
+  top: 0;
+  animation: blink 1.5s infinite alternate;
+  z-index: 1;
+}
+
+.star-left { left: -70px; }
+.star-right { right: -70px; }
+
+@keyframes blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Rainbow animation */
+@keyframes rainbow {
+  0% { color: rgb(255, 0, 0); }
+  20% { color: orange; }
+  40% { color: yellow; }
+  60% { color: green; }
+  80% { color: blue; }
+  100% { color: violet; }
+}
+
+/* Avatar devs */
+.avatar-dev {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated;
+  position: absolute;
+  top: -15px;
+}
+
+.avatar-dev.left {
+  left: -70px;
+  transform: rotate(-15deg);
 }
 
 .container-lateral-nomes {
   display: flex;
-  gap: 40px;
-  justify-content: center;
-  width: 90%;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #222;
+  padding: 25px;
+  gap: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  text-align: left;
+  height: 100%;
+  width: 300px;
   max-width: 600px;
-  flex-wrap: wrap;
+ 
 }
 
 .container-lateral-nomes .jogador {
@@ -288,7 +357,8 @@ body {
   flex-direction: column;
   align-items: center;
   width: 45%;
-  min-width: 140px;
+  gap: 10px;
+  min-width: 250px;
   color: #fff;
 }
 
@@ -335,30 +405,6 @@ body {
   40% { color: #ffcc00; }
   60% { color: #00ff90; }
   100% { color: #00bfff; }
-}
-
-
-
-/* =========================
-   📊 NÍVEL
-========================= */
-.container-nivel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #222;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.6);
-  height: fit-content;
-  margin-top: 150px; /* ajusta pra ficar centralizado verticalmente ao lado do jogo */
-  width: 120px;
-}
-
-.container-nivel p {
-  margin: 5px 0;
-  font-size: 12px;
-  color: #00ff00;
 }
 
 /* =========================

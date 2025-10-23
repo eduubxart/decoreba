@@ -10,24 +10,14 @@
 <body>
   
   <!-- Overlay para digitar os nomes -->
-  <div class="overlay-nomes" id="overlay-nomes">
-    <p class="titulo-overlay">Decoreba</p>
-    <p class="subtitulo-overlay">Jogo de Memória</p>
-
-    <div class="container-lateral-nomes">
-      <div class="jogador">
-        <p>Jogador 1</p>
-        <input type="text" id="nome-jogador-1" placeholder="Nome do Jogador 1">
-      </div>
-      <div class="jogador">
-        <p>Jogador 2</p>
-        <input type="text" id="nome-jogador-2" placeholder="Nome do Jogador 2">
-      </div>
-    </div>
-
-    <button id="btn-iniciar">JOGUE</button>
+  <div class="nomesjogadores" id="nomesjogadores">
+    <div class="titulo">
+      <img src="/src/public/img/eu (1).gif" class="avatar-dev left">
+      <span class="star-left">✦</span>
+      <h1 class="title">Genius</h1>
+      <span class="star-right">✦</span>
+    <p class="subtitulo">Jogo de Memória</p>
   </div>
-
   <!-- CONTAINER GERAL -->
   <div class="container-geral">
     
@@ -38,21 +28,21 @@
       <div class="bloco-jogador" id="jogador-1">
         <p>Jogador 1</p>
         <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-1">0</span></p>
-        <p>Melhor: <span class="melhor-pontuacao" id="melhor-pontuacao-jogador-1">0</span></p>
       </div>
 
       <div class="bloco-jogador" id="jogador-2">
         <p>Jogador 2</p>
         <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-2">0</span></p>
-        <p>Melhor: <span class="melhor-pontuacao" id="melhor-pontuacao-jogador-2">0</span></p>
+      </div>
+          <!-- NÍVEL LATERAL DIREITA -->
+      <div class="container-nivel">
+        <p>NÍVEL</p>
+        <p class="nivel" id="nivel">0</p>
       </div>
     </div>
-    
+  
     <!-- ÁREA CENTRAL DO JOGO -->
     <div class="container-jogo">
-      <!-- Mensagem do jogador ativo acima da grid -->
-      <p id="mensagem-jogador" class="mensagem-jogador">Jogador 1, sua vez!</p>
-
       <div class="area-jogo">
         <div class="clicavel-canto-esquerdo cima" id="vermelho"></div>
         <div class="clicavel-canto-direito cima" id="azul"></div>
@@ -67,13 +57,18 @@
         </div>
       </div>
     </div>
-
-    <!-- NÍVEL LATERAL DIREITA -->
-    <div class="container-nivel">
-      <p>NÍVEL</p>
-      <p class="nivel" id="nivel">0</p>
-    </div>
+      <div class="container-lateral-nomes">
+        <div class="jogador">
+          <p>Jogador 1</p>
+          <input type="text" id="nome-jogador-1" placeholder="Nome do Jogador 1">
+        </div>
+        <div class="jogador">
+          <p>Jogador 2</p>
+          <input type="text" id="nome-jogador-2" placeholder="Nome do Jogador 2">
+        </div>
+      </div>
   </div>
+
 
   <!-- RODAPÉ -->
   <div class="container-rodape">

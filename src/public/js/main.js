@@ -17,7 +17,6 @@ const Jogadores = Array.from({ length: totalJogadores }, () => ({
   sequencia: [],
   respostaJogador: [],
   pontuacao: 0,
-  melhorPontuacao: 0
 }));
 
 let jogadorAtual = 0;
@@ -69,10 +68,8 @@ const novaRodada = () => {
 // Atualiza pontuação
 const atualizarPontuacao = () => {
   Jogadores.forEach((jogador, index) => {
-    const elPontuacao = document.getElementById(`pontuacao-atual-jogador-${index + 1}`);
-    const elMelhor = document.getElementById(`melhor-pontuacao-jogador-${index + 1}`);
+    const elPontuacao = document.getElementById(`pontuacao-atual-jogador-${index + 1}`);   
     if (elPontuacao) elPontuacao.innerText = jogador.pontuacao;
-    if (elMelhor) elMelhor.innerText = jogador.melhorPontuacao;
   });
 };
 
@@ -95,7 +92,6 @@ const verificarRespostas = () => {
   } else {
     controleFundo.style.backgroundColor = 'red';
     controleTexto.innerText = 'Errou!';
-    jogador.melhorPontuacao = Math.max(jogador.melhorPontuacao, jogador.pontuacao);
     setTimeout(() => reiniciarJogo(), 1500);
   }
   atualizarPontuacao();
@@ -168,26 +164,28 @@ botoes.forEach((botao) => {
 const btnIniciar = document.getElementById('btn-iniciar');
 
 btnIniciar.onclick = () => {
-  const nome1 = document.getElementById('nome-jogador-1').value.trim();
-  const nome2 = document.getElementById('nome-jogador-2').value.trim();
+  const nome1 = document.getElementById('nome-jogador-1').value.trim() || "Jogador 1";
+  const nome2 = document.getElementById('nome-jogador-2').value.trim() || "Jogador 2";
 
   // Salva os nomes nos objetos dos jogadores
-  Jogadores[0].nome = nome1 || "Jogador 1";
-  Jogadores[1].nome = nome2 || "Jogador 2";
+  Jogadores[0].nome = nome1;
+  Jogadores[1].nome = nome2;
 
   // Atualiza o ranking lateral
-  document.querySelector('#jogador-1 p:first-child').innerText = Jogadores[0].nome;
-  document.querySelector('#jogador-2 p:first-child').innerText = Jogadores[1].nome;
+  document.querySelector('#jogador-1 p:first-child').innerText = nome1;
+  document.querySelector('#jogador-2 p:first-child').innerText = nome2;
 
-  // Atualiza a mensagem central
-  atualizarMensagemJogador();
+  // Atualiza a mensagem central (se tiver a função)
+  // atualizarMensagemJogador(); // ou cria a função como falamos antes
 
   // Esconde o overlay
-  document.getElementById('overlay-nomes').style.display = 'none';
+  const overlay = document.getElementById('overlay-nomes');
+  overlay.style.display = 'none';
+  overlay.style.opacity = '0';
+  overlay.style.visibility = 'hidden';
+  overlay.style.pointerEvents = 'none';
 
   // Começa a primeira rodada
   novaRodada();
   podeComecar = false;
 };
-
-
