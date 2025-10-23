@@ -7,9 +7,9 @@ const controleTexto = document.querySelector('.botao-central p');
 
 // Seleciona os painéis de pontuação e nível
 const nivelElement = document.getElementById('nivel');
-
+const inputNome1 = document.getElementById('nome-jogador-1');
+const inputNome2 = document.getElementById('nome-jogador-2');
 // Variáveis de controle do jogo
-const btnInciar = document.getElementById('btn-iniciar');
 const mensagemJogador = document.getElementById('mensagem-jogador');
 const totalJogadores = 2; 
 const Jogadores = Array.from({ length: totalJogadores }, () => ({
@@ -161,11 +161,10 @@ botoes.forEach((botao) => {
 // ======================
 // EVENTO NOVO: INICIAR JOGO COM INPUTS
 // ======================
-const btnIniciar = document.getElementById('btn-iniciar');
 
-btnIniciar.onclick = () => {
-  const nome1 = document.getElementById('nome-jogador-1').value.trim() || "Jogador 1";
-  const nome2 = document.getElementById('nome-jogador-2').value.trim() || "Jogador 2";
+  const iniciarJogo = () => {
+  const nome1 = inputNome1.value.trim() || "jogador 1";
+  const nome2 = inputNome2.value.trim() || "jogador 2";
 
   // Salva os nomes nos objetos dos jogadores
   Jogadores[0].nome = nome1;
@@ -175,17 +174,16 @@ btnIniciar.onclick = () => {
   document.querySelector('#jogador-1 p:first-child').innerText = nome1;
   document.querySelector('#jogador-2 p:first-child').innerText = nome2;
 
-  // Atualiza a mensagem central (se tiver a função)
-  // atualizarMensagemJogador(); // ou cria a função como falamos antes
-
-  // Esconde o overlay
-  const overlay = document.getElementById('overlay-nomes');
-  overlay.style.display = 'none';
-  overlay.style.opacity = '0';
-  overlay.style.visibility = 'hidden';
-  overlay.style.pointerEvents = 'none';
-
   // Começa a primeira rodada
   novaRodada();
   podeComecar = false;
+
+    // Detecta Enter nos inputs
+  [inputNome1, inputNome2].forEach(input => {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        iniciarJogo();
+      }
+    });
+  });
 };
