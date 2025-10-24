@@ -131,10 +131,10 @@ body {
 ========================= */
 
 /* Cada botão colorido */
-#vermelho,
-#azul,
-#amarelo,
-#verde {
+.vermelho,
+.azul,
+.amarelo,
+.verde {
   position: relative;
   border-radius: 12px;
   opacity: 0.95;
@@ -143,16 +143,16 @@ body {
 }
 
 /* Cores vibrantes */
-#vermelho {
+.vermelho {
   background: linear-gradient(145deg, #7a0000, #ff0000);
 }
-#azul {
+.azul {
   background: linear-gradient(145deg, #002c7a, #0077ff);
 }
-#amarelo {
+.amarelo {
   background: linear-gradient(145deg, #7a6e00, #ffee00);
 }
-#verde {
+.verde {
   background: linear-gradient(145deg, #004d00, #00ff40);
 }
 
@@ -175,16 +175,16 @@ body {
 }
 
 /* Caminhos dos ícones */
-#vermelho::after {
+.vermelho::after {
   background-image: url("../img/icone-vermelho.png");
 }
-#azul::after {
+.azul::after {
   background-image: url("../img/icone-azul.png");
 }
-#amarelo::after {
+.amarelo::after {
   background-image: url("../img/icone-amarelo.png");
 }
-#verde::after {
+.verde::after {
   background-image: url("../img/icone-verde.png");
 }
 
@@ -372,24 +372,6 @@ body {
   background-color: #111;
   color: #fff;
 }
-
-#btn-iniciar {
-  padding: 16px 36px;
-  border-radius: 12px;
-  border: 2px solid #7fff00;
-  background-color: #8000ff;
-  color: #fff;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-#btn-iniciar:hover {
-  background-color: #a64dff;
-  transform: scale(1.05);
-}
-
 /* Mensagem acima da grid */
 .mensagem-jogador {
   font-family: 'Press Start 2P', cursive;

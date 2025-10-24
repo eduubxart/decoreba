@@ -187,3 +187,4 @@ botoes.forEach((botao) => {
     });
   });
 };
+//mensagem do jogador

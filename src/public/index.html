@@ -8,11 +8,10 @@
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-  
   <!-- Overlay para digitar os nomes -->
-  <div class="nomesjogadores" id="nomesjogadores">
+  <div id="nomesjogadores" class="nomesjogadores">
     <div class="titulo">
-      <img src="/src/public/img/eu (1).gif" class="avatar-dev left">
+      <img src="img/eu (1).gif" class="avatar-dev left">
       <span class="star-left">✦</span>
       <h1 class="title">Genius</h1>
       <span class="star-right">✦</span>
@@ -25,12 +24,12 @@
     <div class="container-ranking">
       <p class="titulo-ranking">RANKING</p>
 
-      <div class="bloco-jogador" id="jogador-1">
+      <div id="jogador-1" class="bloco-jogador" >
         <p>Jogador 1</p>
         <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-1">0</span></p>
       </div>
 
-      <div class="bloco-jogador" id="jogador-2">
+      <div id="jogador-2" class="bloco-jogador" >
         <p>Jogador 2</p>
         <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-2">0</span></p>
       </div>
@@ -44,13 +43,13 @@
     <!-- ÁREA CENTRAL DO JOGO -->
     <div class="container-jogo">
       <div class="area-jogo">
-        <div class="clicavel-canto-esquerdo cima" id="vermelho"></div>
-        <div class="clicavel-canto-direito cima" id="azul"></div>
-        <div class="clicavel-canto-esquerdo baixo" id="amarelo"></div>
-        <div class="clicavel-canto-direito baixo" id="verde"></div>
+        <div id="vermelho" class="clicavel-canto-esquerdo cima vermelho"></div>
+        <div id="azul" class="clicavel-canto-direito cima azul"></div>
+        <div id="amarelo" class="clicavel-canto-esquerdo baixo amarelo"></div>
+        <div id="verde" class="clicavel-canto-direito baixo verde"></div>
 
         <div class="container-botao-central">
-          <div class="botao-central">
+          <div id="botaoStart" class="botao-central">
             <div class="fundo"></div>
             <p>START</p>
           </div>
@@ -60,11 +59,11 @@
       <div class="container-lateral-nomes">
         <div class="jogador">
           <p>Jogador 1</p>
-          <input type="text" id="nome-jogador-1" placeholder="Nome do Jogador 1">
+          <input type="text" id="nome-jogador1" placeholder="Nome do Jogador 1">
         </div>
         <div class="jogador">
           <p>Jogador 2</p>
-          <input type="text" id="nome-jogador-2" placeholder="Nome do Jogador 2">
+          <input type="text" id="nome-jogador2" placeholder="Nome do Jogador 2">
         </div>
       </div>
   </div>
