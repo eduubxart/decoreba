@@ -58,10 +58,17 @@ const novaRodada = () => {
   controleFundo.style.backgroundColor = 'purple';
   controleTexto.innerText = 'aguarde';
 
+
   const novoBotao = aleatorio(Array.from(botoes));
   jogador.sequencia.push(novoBotao);
 
+
   nivelElement.innerText = nivel;
+
+  if (mensagemJogador) {
+  mensagemJogador.innerText = `${Jogadores[jogadorAtual].nome}, é sua vez!`;
+  }
+  
   mostrarSequencia();
 };
 
@@ -187,4 +194,3 @@ botoes.forEach((botao) => {
     });
   });
 };
-//mensagem do jogador
