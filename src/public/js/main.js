@@ -50,7 +50,25 @@ const mostrarSequencia = (i = 0) => {
     }, 600);
   }, 600);
 };
+// ======================
+// FUNÇÃO: MOSTRAR MENSAGEM DE VEZ
+// ======================
+const coresJogadores = ['#FF5C00', '#fe019a'];
 
+const mostrarMensagemJogador = (jogadorIndex, duracao = 1200) => {
+  const jogador = Jogadores[jogadorIndex];
+
+  mensagemJogador.innerHTML = `<span style="color:${coresJogadores[jogadorIndex]}">${jogador.nome}</span>, é sua vez!`;
+
+  // marca o bloco ativo
+  document.querySelectorAll('.bloco-jogador').forEach((el, idx) => {
+    el.classList.toggle('ativo', idx === jogadorIndex);
+  });
+
+  setTimeout(() => {
+    mensagemJogador.innerHTML = '';
+  }, duracao);
+};
 // Nova rodada
 const novaRodada = () => {
   const jogador = Jogadores[jogadorAtual];
@@ -65,12 +83,14 @@ const novaRodada = () => {
 
   nivelElement.innerText = nivel;
 
-  if (mensagemJogador) {
-  mensagemJogador.innerText = `${Jogadores[jogadorAtual].nome}, é sua vez!`;
-  }
-  
-  mostrarSequencia();
-};
+
+  setTimeout(() => {
+  mostrarMensagemJogador(jogadorAtual, 1200);
+    const novoBotao = aleatorio(Array.from(botoes));
+    jogador.sequencia.push(novoBotao);
+    mostrarSequencia();
+  }, 1300);
+}
 
 // Atualiza pontuação
 const atualizarPontuacao = () => {
@@ -141,6 +161,8 @@ const reiniciarJogo = () => {
 // EVENTOS
 // ======================
 
+
+
 // Clique no botão central (start)
 controleFundo.onclick = () => {
   if (podeComecar) {
@@ -168,10 +190,15 @@ botoes.forEach((botao) => {
 // ======================
 // EVENTO NOVO: INICIAR JOGO COM INPUTS
 // ======================
+const iniciarJogo = () => {
+  const nome1 = inputNome1.value.trim();
+  const nome2 = inputNome2.value.trim();
 
-  const iniciarJogo = () => {
-  const nome1 = inputNome1.value.trim() || "jogador 1";
-  const nome2 = inputNome2.value.trim() || "jogador 2";
+  if(!nome1 || !nome2) {
+    alert("Você precisa colocar o nome dos dois jogadores!");
+    return; // bloqueia o início
+  }
+
 
   // Salva os nomes nos objetos dos jogadores
   Jogadores[0].nome = nome1;
@@ -181,16 +208,43 @@ botoes.forEach((botao) => {
   document.querySelector('#jogador-1 p:first-child').innerText = nome1;
   document.querySelector('#jogador-2 p:first-child').innerText = nome2;
 
-  // Começa a primeira rodada
-  novaRodada();
+  // Fecha overlay de nomes
+  document.getElementById('nomesjogadores').style.display = 'none';
   podeComecar = false;
+  const iniciarJogo = () => {
+    const nome1 = inputNome1.value.trim();
+    const nome2 = inputNome2.value.trim();
+  
+    if(!nome1 || !nome2) {
+      alert("Você precisa colocar o nome dos dois jogadores!");
+      return; // bloqueia o início
+    }
+    document.getElementById('nomesjogadores').style.display = 'none';
+  
+    // Salva os nomes nos objetos dos jogadores
+    Jogadores[0].nome = nome1;
+    Jogadores[1].nome = nome2;
+  
+    // Atualiza o ranking lateral
+    document.querySelector('#jogador-1 p:first-child').innerText = nome1;
+    document.querySelector('#jogador-2 p:first-child').innerText = nome2;
+  
+    // Fecha overlay de nomes
+    document.getElementById('nomesjogadores').style.display = 'none';
+  
+  // Mostra mensagem e só depois começa a rodada
+  mostrarMensagemJogador(jogadorAtual, 1200);
+  setTimeout(() => {
+    novaRodada();
+  }, 1300); // espera a mensagem sumir antes de começar
+  };
 
-    // Detecta Enter nos inputs
-  [inputNome1, inputNome2].forEach(input => {
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        iniciarJogo();
-      }
-    });
+// Listener do Enter nos inputs (fora da função)
+[inputNome1, inputNome2].forEach(input => {
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && podeComecar) {
+      iniciarJogo();
+    }
   });
-};
+});
+}
