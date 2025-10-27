@@ -1,0 +1,160 @@
+/* =========================
+   🎯 QUADRADOS COLORIDOS + ÍCONES
+========================= */
+.vermelho, .azul, .amarelo, .verde {
+  position: relative;
+  border-radius: 12px;
+  opacity: 0.95;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.3s, box-shadow 0.3s;
+}
+
+.vermelho {
+  background: linear-gradient(145deg, #7a0000, #ff0000);
+}
+.azul {
+  background: linear-gradient(145deg, #002c7a, #0077ff);
+}
+.amarelo {
+  background: linear-gradient(145deg, #7a6e00, #ffee00);
+}
+.verde {
+  background: linear-gradient(145deg, #004d00, #00ff40);
+}
+
+.clicavel-canto-esquerdo::after, .clicavel-canto-direito::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 2;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.vermelho::after { background-image: url("../assets/img/icone-vermelho.png"); }
+.azul::after { background-image: url("../assets/img/icone-azul.png"); }
+.amarelo::after { background-image: url("../assets/img/icone-amarelo.png"); }
+.verde::after { background-image: url("../assets/img/icone-verde.png"); }
+
+.clicavel-canto-esquerdo.ativo, .clicavel-canto-direito.ativo {
+  filter: brightness(2);
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(255,255,255,0.5);
+}
+
+.clicavel-canto-esquerdo.ativo::after, .clicavel-canto-direito.ativo::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  filter: drop-shadow(0 0 15px rgba(255,255,255,0.9));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* =========================
+   BOTÃO CENTRAL (START)
+========================= */
+.container-botao-central { 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.botao-central {
+  background: #222;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.botao-central .fundo {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #555;
+  transition: background 0.3s;
+  z-index: 1;
+}
+
+.botao-central p {
+  position: relative;
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =========================
+   OVERLAY NOMES JOGADORES
+========================= */
+.titulo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Press Start 2P', cursive;
+  flex-direction: column;
+  align-items: center;   
+}
+
+.titulo .title { font-size: 80px; letter-spacing: 6px; animation: rainbow 5s infinite; position: relative; z-index: 2; }
+.subtitulo { font-size: 16px; color: #ccc; text-align: left; width: 100%; margin: 0; padding-left: 20px; }
+
+.star-left, .star-right { font-size: 50px; position: absolute; top: 0; animation: blink 1.5s infinite alternate; z-index: 1; }
+.star-left { left: -70px; }
+.star-right { right: -70px; }
+
+.avatar-dev { width: 100px; height: 100px; image-rendering: pixelated; position: absolute; top: -15px; }
+.avatar-dev.left { left: -70px; transform: rotate(-15deg); }
+
+
+/*nomes do jgadores e pontuação*/
+.container-lateral-nomes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #222;
+  padding: 25px;
+  gap: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  text-align: left;
+  height: 100%;
+  width: 300px;
+  max-width: 600px;
+}
+
+.container-lateral-nomes .jogador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%;
+  gap: 10px;
+  min-width: 250px;
+  color: #fff;
+}
+
+.container-lateral-nomes .jogador input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 2px solid #7fff00;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  background-color: #111;
+  color: #fff;
+}

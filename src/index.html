@@ -4,30 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Decoreba</title>
+
+  <!-- Fonte -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/styles.css">
+
+  <!-- CSS separados -->
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/leyout.css">
+  <link rel="stylesheet" href="/src/styles/components.css">
+  <link rel="stylesheet" href="/src/styles/animations.css">  
 </head>
-<body>
-  
-  
-  <!-- Overlay para digitar os nomes -->
-  <div id="nomesjogadores" class="nomesjogadores">
-    <div class="titulo">
-      <img src="img/eu (1).gif" class="avatar-dev left">
+<body> 
+     <div class="titulo">
+      <img src="assets/img/eu (1).gif" class="avatar-dev left">
       <span class="star-left">✦</span>
       <h1 class="title">Genius</h1>
       <span class="star-right">✦</span>
-    <p class="subtitulo">Jogo de Memória</p>
-  </div>
+      <p class="subtitulo">Jogo de Memória</p>
+    </div>
+
   <!-- CONTAINER GERAL -->
   <div class="container-geral">
 
-    
     <!-- RANKING LATERAL ESQUERDA -->
     <div class="container-ranking">
       <p class="titulo-ranking">RANKING</p>
 
-          <!-- NÍVEL LATERAL DIREITA -->
+      <!-- NÍVEL LATERAL DIREITA -->
       <div class="container-nivel">
         <p>NÍVEL</p>
         <p class="nivel" id="nivel">0</p>
@@ -36,7 +39,6 @@
   
     <!-- ÁREA CENTRAL DO JOGO -->
     <div class="container-jogo">
-
       <p id="mensagem-jogador" class="mensagem-jogador"></p>
 
       <div class="area-jogo">
@@ -53,34 +55,36 @@
         </div>
       </div>
     </div>
-      <div class="container-lateral-nomes">
-        <div class="jogador">
-          <p>Jogador 1</p>
-          <input type="text" id="nome-jogador-1" placeholder="Nome do Jogador 1">
-          <div id="jogador-1" class="bloco-jogador" >
+
+    <!-- LATERAL NOMES JOGADORES -->
+    <div class="container-lateral-nomes">
+      <div class="jogador">
+        <p>Jogador 1</p>
+        <input type="text" id="nome-jogador-1" placeholder="Nome do Jogador 1">
+        <div id="jogador-1" class="bloco-jogador">
           <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-1">0</span></p>
         </div>
-        </div>
-        <div class="jogador">
-          <p>Jogador 2</p>
-          <input type="text" id="nome-jogador-2" placeholder="Nome do Jogador 2">
-           </div>
-           <div id="jogador-2" class="bloco-jogador">
+      </div>
+      <div class="jogador">
+        <p>Jogador 2</p>
+        <input type="text" id="nome-jogador-2" placeholder="Nome do Jogador 2">
+        <div id="jogador-2" class="bloco-jogador">
           <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-2">0</span></p>
         </div>
-       
       </div>
-  </div>
+    </div>
 
+  </div>
 
   <!-- RODAPÉ -->
   <div class="container-rodape">
     <p>conheça meu github</p>
     <a href="https://github.com/eduubxart" target="_blank">
-      <img src="img/github-icon.png" alt="github" class="github">
+      <img src="assets/img/github-icon.png" alt="github" class="github">
     </a>
   </div>
 
+  <!-- JS -->
   <script src="js/main.js"></script>
 </body>
 </html>

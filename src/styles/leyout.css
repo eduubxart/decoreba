@@ -1,0 +1,142 @@
+/* =========================
+   🧩 CONTAINER GERAL
+========================= */
+.container-geral {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* =========================
+   🏆 RANKING LATERAL ESQUERDA
+========================= */
+.container-ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #222;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  width: 200px;
+  text-align: left;
+  height: 100%;
+}
+
+.titulo-ranking {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 15px;
+  color: #7fff00;
+  font-size: 14px;
+}
+
+.bloco-jogador {
+  width: 100%;
+  background: #111;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.bloco-jogador.ativo {
+  border-color: #7fff00;
+  box-shadow: 0 0 10px #7fff00 inset;
+}
+
+.bloco-jogador p {
+  margin: 6px 0;
+  font-size: 12px;
+}
+
+.pontuacao-atual {
+  font-size: 13px;
+  font-weight: bold;
+  color: #00ff00;
+}
+
+/* =========================
+   📊 NÍVEL
+========================= */
+.container-nivel {
+  width: 100%;
+  background: #111;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 20px solid transparent;
+}
+
+.container-nivel p {
+  margin: 5px 0;
+  font-size: 12px;
+  color: #00fd00;
+}
+
+/* =========================
+   🎯 ÁREA CENTRAL DO JOGO
+========================= */
+.container-jogo {
+  position: relative;
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.area-jogo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 500px;
+  height: 500px;
+  background: #111;
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.mensagem-jogador {
+  position: absolute;
+  top: -30px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px; 
+  color: #7fff00;
+  text-align: center;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: o,5s;
+  width: 100%;
+}
+
+/* =========================
+   👟 RODAPÉ
+========================= */
+.container-rodape {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.container-rodape p {
+  font-size: 10px;
+  margin: 0;
+}
+
+.container-rodape .github {
+  width: 30px;
+  height: 30px;
+  margin-top: 5px;
+  filter: invert(1);
+  transition: 0.3s;
+}
+
+.container-rodape .github:hover {
+  transform: scale(1.1);
+}
