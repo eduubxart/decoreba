@@ -1,127 +1,118 @@
-// Seleciona elementos
+import { salvarNome, recuperarNome, salvarPontuacao, recuperarPontuacao } from './localstorage.js';
+
+// ======================
+// ELEMENTOS
+// ======================
 const botoes = document.querySelectorAll('.clicavel-canto-esquerdo, .clicavel-canto-direito');
 const controleFundo = document.querySelector('.botao-central .fundo');
 const controleTexto = document.querySelector('.botao-central p');
 const nivelElement = document.getElementById('nivel');
-const inputNome1 = document.getElementById('nome-jogador-1');
-const inputNome2 = document.getElementById('nome-jogador-2');
-const jogador1Bloco = document.getElementById('jogador-1');
-const jogador2Bloco = document.getElementById('jogador-2');
 const mensagemJogador = document.getElementById('mensagem-jogador');
+const rankingDiv = document.getElementById("ranking");
+const inputNome1 = document.getElementById('input-jogador-1');
+const inputNome2 = document.getElementById('input-jogador-2');
+const jogador1Bloco = document.getElementById('lateral-jogador-1');
+const jogador2Bloco = document.getElementById('lateral-jogador-2');
 
-const totalJogadores = 2; 
-const Jogadores = Array.from({ length: totalJogadores }, () => ({
-  nome: '',
-  sequencia: [],
-  respostaJogador: [],
-  pontuacao: 0,
-}));
-
-// Agora é seguro usar Jogadores
-const nome1Salvo = localStorage.getItem('nomeJogador1');
-if (nome1Salvo) Jogadores[0].nome = nome1Salvo;
-
-const nome2Salvo = localStorage.getItem('nomeJogador2');
-if (nome2Salvo) Jogadores[1].nome = nome2Salvo;
+// ======================
+// JOGADORES
+// ======================
+const Jogadores = [
+  { nome: recuperarNome(0) || '', sequencia: [], respostaJogador: [], pontuacao: recuperarPontuacao(0) || 0 },
+  { nome: recuperarNome(1) || '', sequencia: [], respostaJogador: [], pontuacao: recuperarPontuacao(1) || 0 }
+];
 
 let jogadorAtual = 0;
 let nivel = 1;
 let esperandoResposta = false;
-let podeComecar = true;
+let podeComecar = false;
 
 // ======================
-// FUNÇÕES DO JOGO
+// FUNÇÕES AUXILIARES
 // ======================
+const aleatorio = array => array[Math.floor(Math.random() * array.length)];
 
-// Aleatório
-const aleatorio = (array) => array[Math.floor(Math.random() * array.length)];
+const atualizarPontuacaoNaTela = () => {
+  Jogadores.forEach((j, i) => {
+    const span = document.getElementById(`pontuacao-atual-jogador-${i + 1}`);
+    if(span) span.innerText = j.pontuacao;
+    salvarPontuacao(i, j.pontuacao);
+  });
+  atualizarRanking();
+};
 
-// Mostra sequência
+const criarOuAtualizarNome = (bloco, nome) => {
+  if (!bloco) return;
+  let p = bloco.parentNode.querySelector('.nome-fixo');
+  if (!p) {
+    p = document.createElement('p');
+    p.classList.add('nome-fixo');
+    bloco.parentNode.insertBefore(p, bloco);
+  }
+  p.innerText = nome;
+  bloco.style.display = 'block';
+};
+
+const mostrarMensagemJogador = (index, duracao = 1200) => {
+  const jogador = Jogadores[index];
+  if (!mensagemJogador) return;
+  mensagemJogador.innerHTML = `<span style="color:${['#FF5C00', '#fe019a'][index]}">${jogador.nome}</span>, é sua vez!`;
+  document.querySelectorAll('.bloco-jogador').forEach((el, i) => el.classList.toggle('ativo', i === index));
+  setTimeout(() => { if(mensagemJogador) mensagemJogador.innerHTML = ''; }, duracao);
+};
+
+// ======================
+// JOGO
+// ======================
 const mostrarSequencia = (i = 0) => {
-  const jogador = Jogadores[jogadorAtual];
-  const botao = jogador.sequencia[i];
-
+  const botao = Jogadores[jogadorAtual].sequencia[i];
   setTimeout(() => {
     botao.classList.add('ativo');
     setTimeout(() => {
       botao.classList.remove('ativo');
-      if (i + 1 < jogador.sequencia.length) {
-        mostrarSequencia(i + 1);
-      } else {
+      if (i + 1 < Jogadores[jogadorAtual].sequencia.length) mostrarSequencia(i + 1);
+      else {
         esperandoResposta = true;
-        controleFundo.style.backgroundColor = 'purple';
-        controleTexto.innerText = 'Jogue!';
+        if(controleFundo) controleFundo.style.backgroundColor = 'purple';
+        if(controleTexto) controleTexto.innerText = 'Jogue!';
       }
     }, 600);
   }, 600);
 };
 
-// Mostrar mensagem de vez
-const coresJogadores = ['#FF5C00', '#fe019a'];
-const mostrarMensagemJogador = (jogadorIndex, duracao = 1200) => {
-  const jogador = Jogadores[jogadorIndex];
-  mensagemJogador.innerHTML = `<span style="color:${coresJogadores[jogadorIndex]}">${jogador.nome}</span>, é sua vez!`;
-
-  document.querySelectorAll('.bloco-jogador').forEach((el, idx) => {
-    el.classList.toggle('ativo', idx === jogadorIndex);
-  });
-
-  setTimeout(() => {
-    mensagemJogador.innerHTML = '';
-  }, duracao);
-};
-
-// Nova rodada
 const novaRodada = () => {
   const jogador = Jogadores[jogadorAtual];
   jogador.respostaJogador = [];
-  controleFundo.style.backgroundColor = 'purple';
-  controleTexto.innerText = 'Aguarde';
-
-  const novoBotao = aleatorio(Array.from(botoes));
-  jogador.sequencia.push(novoBotao);
-
-  nivelElement.innerText = nivel;
-
-  setTimeout(() => {
-    mostrarMensagemJogador(jogadorAtual, 1200);
-    mostrarSequencia();
-  }, 1300);
+  if(controleFundo) controleFundo.style.backgroundColor = 'purple';
+  if(controleTexto) controleTexto.innerText = 'Aguarde';
+  jogador.sequencia.push(aleatorio(Array.from(botoes)));
+  if(nivelElement) nivelElement.innerText = nivel;
+  mostrarMensagemJogador(jogadorAtual, 1200);
+  setTimeout(mostrarSequencia, 1300);
 };
 
-// Atualiza pontuação
-const atualizarPontuacao = () => {
-  Jogadores.forEach((jogador, index) => {
-    document.getElementById(`pontuacao-atual-jogador-${index + 1}`).innerText = jogador.pontuacao;
-  });
-};
-
-// Verifica respostas
 const verificarRespostas = () => {
   const jogador = Jogadores[jogadorAtual];
   esperandoResposta = false;
-
-  const acertouTudo = jogador.respostaJogador.every(
-    (res, idx) => res.id === jogador.sequencia[idx].id
-  );
+  const acertouTudo = jogador.respostaJogador.every((res, i) => res.id === jogador.sequencia[i].id);
 
   if (acertouTudo) {
     jogador.pontuacao++;
     nivel++;
-    controleFundo.style.backgroundColor = 'green';
-    controleTexto.innerText = 'Acertou!';
-    jogadorAtual = (jogadorAtual + 1) % totalJogadores;
-    setTimeout(() => novaRodada(), 1200);
+    if(controleFundo) controleFundo.style.backgroundColor = 'green';
+    if(controleTexto) controleTexto.innerText = 'Acertou!';
+    jogadorAtual = (jogadorAtual + 1) % Jogadores.length;
+    setTimeout(novaRodada, 1200);
   } else {
-    controleFundo.style.backgroundColor = 'red';
-    controleTexto.innerText = 'Errou!';
-    setTimeout(() => reiniciarJogo(), 1500);
+    if(controleFundo) controleFundo.style.backgroundColor = 'red';
+    if(controleTexto) controleTexto.innerText = 'Errou!';
+    salvarRankingFinal();
+    setTimeout(reiniciarJogo, 1500);
   }
-  atualizarPontuacao();
+  atualizarPontuacaoNaTela();
 };
 
-// Clique nos botões coloridos
-const clicarBotao = (botao) => {
+const clicarBotao = botao => {
   if (!esperandoResposta) return;
   const jogador = Jogadores[jogadorAtual];
   jogador.respostaJogador.push(botao);
@@ -129,119 +120,90 @@ const clicarBotao = (botao) => {
   setTimeout(() => botao.classList.remove('ativo'), 400);
 
   const idx = jogador.respostaJogador.length - 1;
-  if (
-    jogador.respostaJogador[idx].id !== jogador.sequencia[idx].id ||
-    jogador.respostaJogador.length === jogador.sequencia.length
-  ) {
+  if (idx >= jogador.sequencia.length - 1 || jogador.respostaJogador[idx].id !== jogador.sequencia[idx].id) {
     verificarRespostas();
   }
 };
 
-// Reinicia jogo
 const reiniciarJogo = () => {
-  Jogadores.forEach(j => {
-    j.sequencia = [];
-    j.respostaJogador = [];
-    j.pontuacao = 0;
-  });
+  Jogadores.forEach(j => { j.sequencia = []; j.respostaJogador = []; j.pontuacao = 0; });
   nivel = 1;
   jogadorAtual = 0;
   podeComecar = true;
-  controleFundo.style.backgroundColor = 'gray';
-  controleTexto.innerText = 'Game Over';
-  atualizarPontuacao();
+  if(controleFundo) controleFundo.style.backgroundColor = 'gray';
+  if(controleTexto) controleTexto.innerText = 'Game Over';
+  atualizarPontuacaoNaTela();
+};
+
+// ======================
+// INICIAR JOGO COM INPUTS
+// ======================
+const iniciarJogo = () => {
+  const nomes = [inputNome1?.value.trim() || '', inputNome2?.value.trim() || ''];
+  if (nomes.some(n => !n)) return alert("Você precisa colocar os nomes dos dois jogadores!");
+
+  nomes.forEach((nome, i) => {
+    Jogadores[i].nome = nome;
+    salvarNome(i, nome);
+    criarOuAtualizarNome([jogador1Bloco, jogador2Bloco][i], nome);
+    if([inputNome1, inputNome2][i]) [inputNome1, inputNome2][i].style.display = 'none';
+  });
+
+  podeComecar = true;
+  mostrarMensagemJogador(jogadorAtual);
+  setTimeout(novaRodada, 1300);
+};
+
+// ======================
+// RANKING
+// ======================
+const atualizarRanking = () => {
+  const jogadoresLS = JSON.parse(localStorage.getItem("jogadores")) || [];
+  jogadoresLS.sort((a, b) => b.score - a.score);
+  if(rankingDiv) rankingDiv.innerHTML = "";
+  jogadoresLS.forEach((jogador, index) => {
+    let medalha = "";
+    if(index === 0) medalha = "🥇";
+    else if(index === 1) medalha = "🥈";
+    else if(index === 2) medalha = "🥉";
+
+    if(rankingDiv){
+      const jogadorRank = document.createElement("div");
+      jogadorRank.innerHTML = `${medalha} ${jogador.nome} - ${jogador.score} pts`;
+      rankingDiv.appendChild(jogadorRank);
+    }
+  });
+};
+
+const salvarRankingFinal = () => {
+  const jogadoresLS = JSON.parse(localStorage.getItem("jogadores")) || [];
+  Jogadores.forEach(j => {
+    const idx = jogadoresLS.findIndex(jLS => jLS.nome === j.nome);
+    if(idx >= 0) jogadoresLS[idx].score = j.pontuacao;
+    else jogadoresLS.push({ nome: j.nome, score: j.pontuacao, nivel });
+  });
+  localStorage.setItem("jogadores", JSON.stringify(jogadoresLS));
+  atualizarRanking();
 };
 
 // ======================
 // EVENTOS
 // ======================
+if(controleFundo) controleFundo.onclick = () => { if (podeComecar) novaRodada(); };
 
-// Start
-controleFundo.onclick = () => {
-  if (podeComecar) novaRodada();
-};
-
-// Botões coloridos
 botoes.forEach(botao => {
   botao.onclick = () => clicarBotao(botao);
   botao.onmouseenter = () => botao.classList.add('hover');
   botao.onmouseleave = () => botao.classList.remove('hover');
 });
 
-// ======================
-// INICIAR JOGO COM INPUTS
-// ======================
-const iniciarJogo = () => {
-  const nome1 = inputNome1.value.trim();
-  const nome2 = inputNome2.value.trim();
-
-  if (!nome1 || !nome2) {
-    alert("Você precisa colocar os nomes dos dois jogadores!");
-    return;
-  }
-
-  // Salva no LocalStorage
-  localStorage.setItem('nomeJogador1', nome1);
-  localStorage.setItem('nomeJogador2', nome2);
-
-  // Salva no objeto do jogo
-  Jogadores[0].nome = nome1;
-  Jogadores[1].nome = nome2;
-
-  [ 
-    { input: inputNome1, bloco: jogador1Bloco, nome: nome1 }, 
-    { input: inputNome2, bloco: jogador2Bloco, nome: nome2 } 
-  ].forEach(({ input, bloco, nome }) => {
-    input.style.display = 'none';
-    const pNome = document.createElement('p');
-    pNome.classList.add('nome-fixo');
-    pNome.innerText = nome;
-    bloco.parentNode.insertBefore(pNome, bloco);
-    bloco.style.display = 'block';
-  });
-  
-  const overlay = document.getElementById('nomesjogadores');
-  if (overlay) overlay.style.display = 'none';
-  podeComecar = true;
-
-  mostrarMensagemJogador(jogadorAtual, 1200);
-  setTimeout(() => {
-    novaRodada();
-  }, 1300);
-};
-
-
-// Listener do Enter
 [inputNome1, inputNome2].forEach(input => {
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') iniciarJogo();
-  });
+  if(input) input.addEventListener('keydown', e => { if(e.key === 'Enter') iniciarJogo(); });
 });
-const inputs = [
-  { input: inputNome1, bloco: jogador1Bloco, index: 0 },
-  { input: inputNome2, bloco: jogador2Bloco, index: 1 }
-];
 
-inputs.forEach(({ input, bloco, index }) => {
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const nome = input.value.trim();
-      if (!nome) return;
+// ======================
+// INICIALIZAÇÃO
+// ======================
+Jogadores.forEach((j, i) => { if (j.nome) criarOuAtualizarNome([jogador1Bloco, jogador2Bloco][i], j.nome); });
+atualizarPontuacaoNaTela();
 
-      // Salva no objeto do jogador
-      Jogadores[index].nome = nome;
-
-      // Substitui o input pelo nome dentro da mesma div
-      input.style.display = 'none';
-      const pNome = document.createElement('p');
-      pNome.classList.add('nome-fixo'); // opcional pra estilizar
-      pNome.innerText = nome;
-
-      // Insere o nome acima da pontuação
-      bloco.parentNode.insertBefore(pNome, bloco);
-
-      // Mostra o bloco da pontuação (caso estivesse escondido)
-      bloco.style.display = 'block';
-    }
-  });
-});
