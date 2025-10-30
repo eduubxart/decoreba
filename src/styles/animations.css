@@ -16,10 +16,3 @@
   100% { color: violet; }
 }
 
-/* segunda rainbow usada no título (se quiser manter) */
-@keyframes rainbow {
-  10% { color: #ff0040; }
-  40% { color: #ffcc00; }
-  60% { color: #00ff90; }
-  100% { color: #00bfff; }
-}

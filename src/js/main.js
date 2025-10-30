@@ -28,7 +28,7 @@ let esperandoResposta = false;
 let podeComecar = false;
 
 // ======================
-// FUNÇÕES AUXILIARES
+// AUXILIARES
 // ======================
 const aleatorio = array => array[Math.floor(Math.random() * array.length)];
 
@@ -39,6 +39,7 @@ const atualizarPontuacaoNaTela = () => {
     salvarPontuacao(i, j.pontuacao);
   });
   atualizarRanking();
+  if (typeof window.atualizarRanking === "function") window.atualizarRanking();
 };
 
 const criarOuAtualizarNome = (bloco, nome) => {
@@ -106,7 +107,8 @@ const verificarRespostas = () => {
   } else {
     if(controleFundo) controleFundo.style.backgroundColor = 'red';
     if(controleTexto) controleTexto.innerText = 'Errou!';
-    salvarRankingFinal();
+
+    salvarRankingFinal(); // <--- salva antes de zerar pontuação
     setTimeout(reiniciarJogo, 1500);
   }
   atualizarPontuacaoNaTela();
@@ -140,7 +142,7 @@ const reiniciarJogo = () => {
 // ======================
 const iniciarJogo = () => {
   const nomes = [inputNome1?.value.trim() || '', inputNome2?.value.trim() || ''];
-  if (nomes.some(n => !n)) return alert("Você precisa colocar os nomes dos dois jogadores!");
+  if (nomes.some(n => !n)) return alert("Você precisa colocar os nomes dos dois ou mais jogadores!");
 
   nomes.forEach((nome, i) => {
     Jogadores[i].nome = nome;
@@ -158,32 +160,45 @@ const iniciarJogo = () => {
 // RANKING
 // ======================
 const atualizarRanking = () => {
-  const jogadoresLS = JSON.parse(localStorage.getItem("jogadores")) || [];
-  jogadoresLS.sort((a, b) => b.score - a.score);
-  if(rankingDiv) rankingDiv.innerHTML = "";
-  jogadoresLS.forEach((jogador, index) => {
-    let medalha = "";
-    if(index === 0) medalha = "🥇";
-    else if(index === 1) medalha = "🥈";
-    else if(index === 2) medalha = "🥉";
+  const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+  ranking.sort((a, b) => b.pontuacao - a.pontuacao);
 
-    if(rankingDiv){
-      const jogadorRank = document.createElement("div");
-      jogadorRank.innerHTML = `${medalha} ${jogador.nome} - ${jogador.score} pts`;
-      rankingDiv.appendChild(jogadorRank);
+  // pega todos os blocos já existentes dentro do container-ranking
+  const blocos = document.querySelectorAll(".ranking-jogador");
+
+  blocos.forEach((bloco, i) => {
+    const jogador = ranking[i];
+    if (jogador) {
+      let medalha = "";
+      if (i === 0) medalha = "🥇";
+      else if (i === 1) medalha = "🥈";
+      else if (i === 2) medalha = "🥉";
+
+      bloco.innerHTML = `
+        <p>${medalha} ${jogador.nome}</p>
+        <p>Pontuação: ${jogador.pontuacao}</p>
+      `;
+    } else {
+      bloco.innerHTML = `<p>-</p><p>Pontuação: 0</p>`;
     }
   });
 };
-
 const salvarRankingFinal = () => {
-  const jogadoresLS = JSON.parse(localStorage.getItem("jogadores")) || [];
+  const ranking = JSON.parse(localStorage.getItem("ranking-jogador")) || [];
+
   Jogadores.forEach(j => {
-    const idx = jogadoresLS.findIndex(jLS => jLS.nome === j.nome);
-    if(idx >= 0) jogadoresLS[idx].score = j.pontuacao;
-    else jogadoresLS.push({ nome: j.nome, score: j.pontuacao, nivel });
+    const idx = ranking.findIndex(r => r.nome === j.nome);
+    if (idx >= 0) {
+      ranking[idx].pontuacao = Math.max(ranking[idx].pontuacao, j.pontuacao);
+    } else {
+      ranking.push({ nome: j.nome, pontuacao: j.pontuacao });
+    }
   });
-  localStorage.setItem("jogadores", JSON.stringify(jogadoresLS));
-  atualizarRanking();
+
+  ranking.sort((a, b) => b.pontuacao - a.pontuacao);
+  localStorage.setItem("ranking", JSON.stringify(ranking));
+
+  if (typeof window.atualizarRanking === "function") window.atualizarRanking();
 };
 
 // ======================
@@ -206,4 +221,4 @@ botoes.forEach(botao => {
 // ======================
 Jogadores.forEach((j, i) => { if (j.nome) criarOuAtualizarNome([jogador1Bloco, jogador2Bloco][i], j.nome); });
 atualizarPontuacaoNaTela();
-
+atualizarRanking();
