@@ -3,8 +3,8 @@
 ========================= */
 
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -16,8 +16,27 @@ body {
   margin: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;  /* centraliza horizontalmente */
-  align-items: center;      /* centraliza verticalmente */
-  overflow-x: hidden;       /* evita scroll horizontal */
-  overflow-y: auto;         /* permite scroll vertical se necessário */
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
+
+/* =========================
+   🔹 ANIMAÇÕES
+========================= */
+@keyframes blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes rainbow {
+  0% { color: rgb(255, 0, 0); }
+  20% { color: orange; }
+  40% { color: yellow; }
+  60% { color: green; }
+  80% { color: blue; }
+  100% { color: violet; }
+}
+

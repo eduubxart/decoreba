@@ -1,76 +1,83 @@
 // pega os inputs
-const input1 = document.getElementById("input-jogador-1");
-const input2 = document.getElementById("input-jogador-2");
+const addjogador1 = document.getElementById("addjogador1");
+const addjogador2 = document.getElementById("addjogador2");
 
-// pega o container do ranking
+// pega o container do ranking lateral
 const ranking1 = document.getElementById("ranking-jogador-1");
 const ranking2 = document.getElementById("ranking-jogador-2");
 
-// função pra salvar os nomes
+// pega container lateral (onde tem input)
+const lateralJogador1 = document.getElementById("pontuacao-atual-jogador-1");
+const lateralJogador2 = document.getElementById("pontuacao-atual-jogador-2");
+
+// variáveis de pontuação
+let pontosJogador1 = 0;
+let pontosJogador2 = 0;
+
+// salvar jogadores (zera pontuação)
 function salvarJogadores() {
-  const nome1 = input1.value.trim();
-  const nome2 = input2.value.trim();
+  const nome1 = addjogador1.value.trim();
+  const nome2 = addjogador2.value.trim();
 
   const jogadores = [
     { nome: nome1, pontuacao: 0 },
     { nome: nome2, pontuacao: 0 },
   ];
 
-  // salva no localStorage
   localStorage.setItem("ranking", JSON.stringify(jogadores));
 
-  // mostra no ranking lateral
+  // zera variáveis de pontuação
+  pontosJogador1 = 0;
+  pontosJogador2 = 0;
+
+  // atualiza container lateral
+  lateralJogador1.textContent = pontosJogador1;
+  lateralJogador2.textContent = pontosJogador2;
+
   atualizarRanking();
 }
 
-// função pra mostrar o ranking salvo
+// atualizar ranking lateral
 function atualizarRanking() {
-  const dados = localStorage.getItem("ranking");
-  if (!dados) return;
+  const dados = JSON.parse(localStorage.getItem("ranking")) || [];
 
-  const jogadores = JSON.parse(dados);
+  if (!ranking1 || !ranking2) return;
 
-  // limpa o conteúdo atual
-  ranking1.innerHTML = "";
-  ranking2.innerHTML = "";
+  // jogador 1
+  ranking1.innerHTML = `<p class="nome">${dados[0]?.nome || '-'}</p>
+                        <p class="pontuacao">Pontuação: ${dados[0]?.pontuacao || 0}</p>`;
+  lateralJogador1.textContent = dados[0]?.pontuacao || 0;
 
-  // cria os blocos de nome e pontuação
-  if (jogadores[0]) {
-    ranking1.innerHTML = `
-      <p class="nome">${jogadores[0].nome}</p>
-      <p class="pontuacao">Pontuação: ${jogadores[0].pontuacao}</p>
-    `;
-  }
-  
-
-  if (jogadores[1]) {
-    ranking2.innerHTML = `
-      <p class="nome">${jogadores[1].nome}</p>
-      <p class="pontuacao">Pontuação: ${jogadores[1].pontuacao}</p>
-    `;
-  }
+  // jogador 2
+  ranking2.innerHTML = `<p class="nome">${dados[1]?.nome || '-'}</p>
+                        <p class="pontuacao">Pontuação: ${dados[1]?.pontuacao || 0}</p>`;
+  lateralJogador2.textContent = dados[1]?.pontuacao || 0;
 }
 
-// escuta quando o jogador sai do input (ou tu pode trocar por botão start)
-input1.addEventListener("change", salvarJogadores);
-input2.addEventListener("change", salvarJogadores);
-
-// quando a página carregar, já mostra o ranking salvo
-window.addEventListener("load", atualizarRanking);
-// função pra atualizar a pontuação no ranking
-function atualizarPontuacao(jogadorIndex, novaPontuacao) {
+// atualizar pontuação do jogador
+function atualizarPontuacao(jogadorIndex) {
   const dados = localStorage.getItem("ranking");
   if (!dados) return;
 
   const jogadores = JSON.parse(dados);
   if (!jogadores[jogadorIndex]) return;
 
-  // atualiza a pontuação do jogador específico
-  jogadores[jogadorIndex].pontuacao = novaPontuacao;
+  // incrementa a pontuação da variável
+  if (jogadorIndex === 0) {
+    pontosJogador1++;
+    jogadores[0].pontuacao = pontosJogador1;
+    lateralJogador1.textContent = pontosJogador1;
+  } else {
+    pontosJogador2++;
+    jogadores[1].pontuacao = pontosJogador2;
+    lateralJogador2.textContent = pontosJogador2;
+  }
 
-  // salva de novo no localStorage
   localStorage.setItem("ranking", JSON.stringify(jogadores));
-
-  // atualiza o visual do ranking
   atualizarRanking();
 }
+
+// eventos
+addjogador1.addEventListener("change", salvarJogadores);
+addjogador2.addEventListener("change", salvarJogadores);
+window.addEventListener("load", atualizarRanking);

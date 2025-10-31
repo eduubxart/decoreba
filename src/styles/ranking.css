@@ -1,0 +1,58 @@
+/* =========================
+   🏆 RANKING LATERAL
+========================= */
+.container-ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #222;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+  width: 310px;
+  text-align: left;
+  height: 349px;
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+}
+
+.titulo-ranking {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 15px;
+  color: #7fff00;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.ranking-jogador {
+  width: 100%;
+  background: linear-gradient(145deg, #111, #1a1a1a);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.ranking-jogador:hover {
+  transform: scale(1.02);
+  border-color: #7fff00;
+  box-shadow: 0 0 8px #7fff00;
+}
+
+.ranking-jogador p:first-child {
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.ranking-jogador p:last-child {
+  font-size: 11px;
+  font-weight: bold;
+  color: #00ff00;
+  text-align: right;
+}

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/leyout.css">
   <link rel="stylesheet" href="/src/styles/components.css">
-  <link rel="stylesheet" href="/src/styles/animations.css">
+  <link rel="stylesheet" href="/src/styles/ranking.css">
 </head>
 <body> 
   <div class="titulo">
@@ -25,14 +25,16 @@
     <div class="container-lateral-nomes">
       <div class="jogador">
         <p>Jogador 1</p>
-        <input type="text" id="input-jogador-1" placeholder="Nome do Jogador 1">
+        <input type="text" id="addjogador1" placeholder="Nome do Jogador 1">
+        <p class="nome-lateral" id="nome-lateral-jogador-1"></p>
         <div id="lateral-jogador-1" class="bloco-jogador">
           <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-1">0</span></p>
         </div>
       </div>
       <div class="jogador">
         <p>Jogador 2</p>
-        <input type="text" id="input-jogador-2" placeholder="Nome do Jogador 2">
+        <input type="text" id="addjogador2" placeholder="Nome do Jogador 2">
+        <p class="nome-lateral" id="nome-lateral-jogador-2"></p>
         <div id="lateral-jogador-2" class="bloco-jogador">
           <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-2">0</span></p>
         </div>
@@ -68,12 +70,18 @@
     <!-- RANKING LATERAL -->
     <div class="container-ranking">
       <p class="titulo-ranking">RANKING</p>
-      <div id="ranking-jogador-1" class="ranking-jogador"></div>
-      <div id="ranking-jogador-2" class="ranking-jogador"></div>
-
+      <div class="ranking-jogador">
+        <div id="ranking-jogador-1">
+          <p>Pontuação: <span class="pontuacao-atual-ranking" id="pontuacao-atual-ranking-jogador-1">0</span></p>
+        </div>
+      </div>
+      <div class="ranking-jogador">
+        <div id="ranking-jogador-2">
+          <p>Pontuação: <span class="pontuacao-atual-ranking" id="pontuacao-atual-ranking-jogador-2">0</span></p>
+        </div>
+      </div>
     </div>
   </div>
-
   <!-- RODAPÉ -->
   <div class="container-rodape">
     <p>conheça meu github</p>

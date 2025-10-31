@@ -9,8 +9,8 @@ const controleTexto = document.querySelector('.botao-central p');
 const nivelElement = document.getElementById('nivel');
 const mensagemJogador = document.getElementById('mensagem-jogador');
 const rankingDiv = document.getElementById("ranking");
-const inputNome1 = document.getElementById('input-jogador-1');
-const inputNome2 = document.getElementById('input-jogador-2');
+const addNome1 = document.getElementById('addjogador1');
+const addNome2 = document.getElementById('addjogador2');
 const jogador1Bloco = document.getElementById('lateral-jogador-1');
 const jogador2Bloco = document.getElementById('lateral-jogador-2');
 
@@ -42,17 +42,12 @@ const atualizarPontuacaoNaTela = () => {
   if (typeof window.atualizarRanking === "function") window.atualizarRanking();
 };
 
-const criarOuAtualizarNome = (bloco, nome) => {
-  if (!bloco) return;
-  let p = bloco.parentNode.querySelector('.nome-fixo');
-  if (!p) {
-    p = document.createElement('p');
-    p.classList.add('nome-fixo');
-    bloco.parentNode.insertBefore(p, bloco);
-  }
-  p.innerText = nome;
+const criarOuAtualizarNome = (bloco, nome, index) => {
+  const nomeElement = document.getElementById(`nome-lateral-jogador-${index + 1}`);
+  if (nomeElement) nomeElement.textContent = nome;
   bloco.style.display = 'block';
 };
+
 
 const mostrarMensagemJogador = (index, duracao = 1200) => {
   const jogador = Jogadores[index];
@@ -141,15 +136,25 @@ const reiniciarJogo = () => {
 // INICIAR JOGO COM INPUTS
 // ======================
 const iniciarJogo = () => {
-  const nomes = [inputNome1?.value.trim() || '', inputNome2?.value.trim() || ''];
+  const nomes = [addNome1?.value.trim() || '', addNome2?.value.trim() || ''];
   if (nomes.some(n => !n)) return alert("Você precisa colocar os nomes dos dois ou mais jogadores!");
 
   nomes.forEach((nome, i) => {
     Jogadores[i].nome = nome;
+
+    // reset pontuação do jogador
+    Jogadores[i].pontuacao = 0;
+    salvarPontuacao(i, 0);
+
     salvarNome(i, nome);
-    criarOuAtualizarNome([jogador1Bloco, jogador2Bloco][i], nome);
-    if([inputNome1, inputNome2][i]) [inputNome1, inputNome2][i].style.display = 'none';
+    criarOuAtualizarNome([jogador1Bloco, jogador2Bloco][i], nome, i);
+
+    if([addNome1, addNome2][i]) [addNome1, addNome2][i].style.display = 'none';
   });
+
+  // atualiza pontuação na tela e ranking
+  atualizarPontuacaoNaTela();
+  atualizarRanking();
 
   podeComecar = true;
   mostrarMensagemJogador(jogadorAtual);
@@ -212,7 +217,7 @@ botoes.forEach(botao => {
   botao.onmouseleave = () => botao.classList.remove('hover');
 });
 
-[inputNome1, inputNome2].forEach(input => {
+[addNome1, addNome2].forEach(input => {
   if(input) input.addEventListener('keydown', e => { if(e.key === 'Enter') iniciarJogo(); });
 });
 

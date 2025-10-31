@@ -1,5 +1,67 @@
 /* =========================
-   🎯 QUADRADOS COLORIDOS + ÍCONES
+   🎨 COMPONENTES: TÍTULO E AVATAR
+========================= */
+
+/* Container do título */
+.titulo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Press Start 2P', cursive;
+  flex-direction: column;
+  align-items: center;   
+}
+
+/* Título principal */
+.titulo .title { 
+  font-size: 80px; 
+  letter-spacing: 10px; 
+  animation: rainbow 5s infinite; 
+  position: relative; 
+  z-index: 2; 
+}
+
+/* Subtítulo */
+.subtitulo { 
+  font-size: 16px; 
+  color: #ccc; 
+  text-align: left; 
+  width: 100%; 
+  margin: 0; 
+}
+
+/* Estrelas do título */
+.star-left, .star-right { 
+  font-size: 50px; 
+  position: absolute; 
+  top: 0; 
+  animation: blink 1.5s infinite alternate; 
+  z-index: 1; 
+}
+.star-left { 
+  left: -70px; 
+}
+.star-right { 
+  right: -70px; 
+}
+
+/* Avatar do dev */
+.avatar-dev { 
+  width: 100px; 
+  height: 100px; 
+  image-rendering: pixelated; 
+  position: absolute; 
+  top: -15px; 
+}
+
+.avatar-dev.left { 
+  left: -70px; 
+  transform: rotate(-15deg); 
+}
+
+/* =========================
+   QUADRADOS COLORIDOS + ÍCONES
 ========================= */
 .vermelho, .azul, .amarelo, .verde {
   position: relative;
@@ -9,18 +71,10 @@
   transition: transform 0.2s, filter 0.3s, box-shadow 0.3s;
 }
 
-.vermelho {
-  background: linear-gradient(145deg, #7a0000, #ff0000);
-}
-.azul {
-  background: linear-gradient(145deg, #002c7a, #0077ff);
-}
-.amarelo {
-  background: linear-gradient(145deg, #7a6e00, #ffee00);
-}
-.verde {
-  background: linear-gradient(145deg, #004d00, #00ff40);
-}
+.vermelho { background: linear-gradient(145deg, #7a0000, #ff0000); }
+.azul { background: linear-gradient(145deg, #002c7a, #0077ff); }
+.amarelo { background: linear-gradient(145deg, #7a6e00, #ffee00); }
+.verde { background: linear-gradient(145deg, #004d00, #00ff40); }
 
 .clicavel-canto-esquerdo::after, .clicavel-canto-direito::after {
   content: "";
@@ -56,107 +110,8 @@
 }
 
 /* =========================
-   BOTÃO CENTRAL (START)
+   LATERAL NOMES E BLOCO JOGADOR
 ========================= */
-.container-botao-central { 
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.botao-central {
-  background: #222;
-  border-radius: 50%;
-  width: 160px;
-  height: 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.7);
-  cursor: pointer;
-  z-index: 10;
-}
-
-.botao-central .fundo {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #555;
-  transition: background 0.3s;
-  z-index: 1;
-}
-
-.botao-central p {
-  position: relative;
-  font-size: 10px;
-  color: white;
-  text-transform: uppercase;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* =========================
-   OVERLAY NOMES JOGADORES
-========================= */
-.titulo {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  font-family: 'Press Start 2P', cursive;
-  flex-direction: column;
-  align-items: center;   
-}
-
-.titulo .title { 
-  font-size: 80px; 
-  letter-spacing: 10px; 
-  animation: rainbow 5s infinite; 
-  position: relative; 
-  z-index: 2; 
-}
-
-.subtitulo { 
-  font-size: 16px; 
-  color: #ccc; 
-  text-align: left; 
-  width: 100%; 
-  margin: 0; 
-}
-
-.star-left, .star-right { 
-  font-size: 50px; 
-  position: absolute; 
-  top: 0; 
-  animation: blink 1.5s infinite alternate; 
-  z-index: 1; 
-}
-.star-left { 
-  left: -70px; 
-}
-
-.star-right { 
-  right: -70px; 
-}
-
-.avatar-dev { 
-  width: 100px; 
-  height: 100px; 
-  image-rendering: pixelated; 
-  position: absolute; 
-  top: -15px; 
-}
-
-.avatar-dev.left { 
-  left: -70px; 
-  transform: rotate(-15deg); 
-}
-
-
-/*nomes do jgadores e pontuação*/
 .container-lateral-nomes {
   display: flex;
   flex-direction: column;
@@ -167,8 +122,8 @@
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0,0,0,0.6);
   text-align: left;
-  height: 100%;
-  width: 300px;
+  height: 432px;
+  width: 310px;
   max-width: 600px;
 }
 
@@ -178,7 +133,7 @@
   align-items: center;
   width: 45%;
   gap: 10px;
-  min-width: 250px;
+  min-width: 260px;
   color: #fff;
 }
 
@@ -191,4 +146,45 @@
   font-size: 14px;
   background-color: #111;
   color: #fff;
+  
+}
+.nome-lateral {
+  width: 100%;
+  background: linear-gradient(145deg, #111, #1a1a1a);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  }
+
+  
+
+.bloco-jogador {
+  width: 100%;
+  background: #111;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.bloco-jogador.ativo {
+  border-color: #7fff00;
+  box-shadow: 0 0 10px #7fff00 inset;
+}
+
+.bloco-jogador p {
+  margin: 6px 0;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+
+.pontuacao-atual {
+  font-size: 13px;
+  font-weight: bold;
+  color: #00ff00;
 }

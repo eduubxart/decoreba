@@ -11,87 +11,56 @@
 }
 
 /* =========================
-   🏆 RANKING LATERAL ESQUERDA
+   BOTÃO CENTRAL
 ========================= */
-.container-ranking {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.container-botao-central { 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.botao-central {
   background: #222;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.6);
-  width: 296px;
-  text-align: left;
-  height: 100%;
-}
-
-.titulo-ranking {
-  text-align: center;
-  width: 100%;
-  margin-bottom: 15px;
-  color: #7fff00;
-  font-size: 14px;
-}
-
-.bloco-jogador {
-  width: 100%;
-  background: #111;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  border: 2px solid transparent;
-}
-
-.bloco-jogador.ativo {
-  border-color: #7fff00;
-  box-shadow: 0 0 10px #7fff00 inset;
-}
-
-.bloco-jogador p {
-  margin: 6px 0;
-  font-size: 12px;
-}
-
-.pontuacao-atual {
-  font-size: 13px;
-  font-weight: bold;
-  color: #00ff00;
-}
-
-/* =========================
-   📊 NÍVEL
-========================= */
-.container-central {
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.7);
+  cursor: pointer;
+  z-index: 10;
 }
 
-.container-nivel {
-  background: #111;
-  padding: 10px 20px;
-  border-radius: 12px;
-  color: #00fd00;
-  font-size: 14px;
-  font-family: 'Press Start 2P', cursive;
+.botao-central .fundo {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #555;
+  transition: background 0.3s;
+  z-index: 1;
 }
 
-.container-nivel p {
-  margin: 0;
+.botao-central p {
+  position: relative;
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 2;
 }
-
 
 /* =========================
-   🎯 ÁREA CENTRAL DO JOGO
+   ÁREA CENTRAL DO JOGO
 ========================= */
 .container-jogo {
   position: relative;
   display: flex;
-  flex-direction: center;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .area-jogo {
@@ -117,13 +86,22 @@
   text-align: center;
   margin-bottom: 10px;
   opacity: 0;
-  transition: o,5s;
+  transition: opacity 0.5s;
   width: 100%;
 }
 
 /* =========================
-   👟 RODAPÉ
+   NÍVEL
 ========================= */
+.container-nivel {
+  background: #111;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #00fd00;
+  font-size: 14px;
+}
+
+.container-nivel p { margin: 0; }
 .container-rodape {
   margin-top: 40px;
   text-align: center;
