@@ -23,7 +23,7 @@ body {
 }
 
 /* =========================
-   🔹 ANIMAÇÕES
+ 🔹 ANIMAÇÕES
 ========================= */
 @keyframes blink {
   0% { opacity: 0; }
@@ -39,4 +39,3 @@ body {
   80% { color: blue; }
   100% { color: violet; }
 }
-

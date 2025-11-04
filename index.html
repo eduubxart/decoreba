@@ -11,13 +11,22 @@
   <link rel="stylesheet" href="/src/styles/ranking.css">
 </head>
 <body> 
-  <div class="titulo">
+  <header>  
+    <div class="titulo">
     <img src="/src/assets/img/eu (1).gif" class="avatar-dev left" alt="avatar">
     <span class="star-left">✦</span>
     <h1 class="title">Genius</h1>
     <span class="star-right">✦</span>
     <p class="subtitulo">Jogo de Memória</p>
   </div>
+    <button id="btn-opcoes" class="tres-pontinhos">⋮</button>
+    <div id="menu-opcoes" class="menu-opcoes">
+      <h3>Modo de jogo</h3>
+      <button id="modo-solo">Solo</button>
+      <button id="modo-duo">Duo</button>
+    </div>
+  </header>  
+
 
   <div class="container-geral">
     
@@ -29,6 +38,7 @@
         <p class="nome-lateral" id="nome-lateral-jogador-1"></p>
         <div id="lateral-jogador-1" class="bloco-jogador">
           <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-1">0</span></p>
+          <p>chances: <span class="chances-atual" id ="chances-atual-jogador-1">❤️❤️❤️</span></p>
         </div>
       </div>
       <div class="jogador">
@@ -37,6 +47,7 @@
         <p class="nome-lateral" id="nome-lateral-jogador-2"></p>
         <div id="lateral-jogador-2" class="bloco-jogador">
           <p>Pontuação: <span class="pontuacao-atual" id="pontuacao-atual-jogador-2">0</span></p>
+          <p>chances: <span class="chances-atual" id ="chances-atual-jogador-2">❤️❤️❤️</span></p>
         </div>
       </div>
     </div>

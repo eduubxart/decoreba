@@ -10,7 +10,7 @@
   gap: 10px;
   font-family: 'Press Start 2P', cursive;
   flex-direction: column;
-  align-items: center;   
+  align-items: center; 
 }
 
 /* Título principal */
@@ -61,7 +61,7 @@
 }
 
 /* =========================
-   QUADRADOS COLORIDOS + ÍCONES
+ QUADRADOS COLORIDOS + ÍCONES
 ========================= */
 .vermelho, .azul, .amarelo, .verde {
   position: relative;
@@ -110,7 +110,43 @@
 }
 
 /* =========================
-   LATERAL NOMES E BLOCO JOGADOR
+ BOTÃO CENTRAL
+========================= */
+.botao-central {
+  background: #222;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.7);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.botao-central .fundo {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #555;
+  transition: background 0.3s;
+  z-index: 1;
+}
+
+.botao-central p {
+  position: relative;
+  font-size: 10px;
+  color: white;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =========================
+ LATERAL NOMES E BLOCO JOGADOR
 ========================= */
 .container-lateral-nomes {
   display: flex;
@@ -158,9 +194,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  }
-
-  
+}
 
 .bloco-jogador {
   width: 100%;
@@ -182,9 +216,88 @@
   transition: all 0.3s ease;
 }
 
-
 .pontuacao-atual {
   font-size: 13px;
   font-weight: bold;
   color: #00ff00;
+}
+
+/* =========================
+ NÍVEL
+========================= */
+.container-nivel {
+  background: #111;
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: #00fd00;
+  font-size: 14px;
+}
+
+.container-nivel p { margin: 0; }
+
+/* =========================
+ MENSAGEM DO JOGADOR
+========================= */
+.mensagem-jogador {
+  position: absolute;
+  top: -30px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px; 
+  color: #7fff00;
+  text-align: center;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  width: 100%;
+}
+
+/* =========================
+ MENU DE OPÇÕES (Sidebar)
+========================= */
+.menu-opcoes {
+  position: fixed;
+  top: 0;
+  right: -200px;
+  width: 200px;
+  height: 100%;
+  background: #1b1b1b;
+  color: #fff;
+  transition: right 0.4s ease;
+  padding: 20px;
+  font-family: 'Press Start 2P', cursive;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.menu-opcoes.ativo {
+  right: 0;
+}
+.menu-opcoes button {
+  background: purple;
+  border: none;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* =========================
+ RODAPÉ (elementos internos)
+========================= */
+.container-rodape p {
+  font-size: 10px;
+  margin: 0;
+}
+
+.container-rodape .github {
+  width: 30px;
+  height: 30px;
+  margin-top: 5px;
+  filter: invert(1);
+  transition: 0.3s;
+}
+
+.container-rodape .github:hover {
+  transform: scale(1.1);
 }
