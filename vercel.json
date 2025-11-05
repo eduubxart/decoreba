@@ -1,9 +1,8 @@
 {
-  "builds": [
-    { "src": "package.json", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/src/server.js" }
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
-
