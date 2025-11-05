@@ -151,7 +151,7 @@
 .container-lateral-nomes {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   background: #222;
   padding: 25px;
   gap: 20px;
@@ -167,9 +167,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 45%;
+  width: 100%; /* NOVO: Garante que ocupe a largura total de 310px, devido ao 'align-items: stretch' */
   gap: 10px;
-  min-width: 260px;
   color: #fff;
 }
 
@@ -254,34 +253,53 @@
 /* =========================
  MENU DE OPÇÕES (Sidebar)
 ========================= */
+/* Verifique se você não deixou um ponto-e-vírgula no lugar errado ou faltou um */
 .menu-opcoes {
-  position: fixed;
-  top: 0;
-  right: -200px;
-  width: 200px;
-  height: 100%;
-  background: #1b1b1b;
-  color: #fff;
-  transition: right 0.4s ease;
-  padding: 20px;
-  font-family: 'Press Start 2P', cursive;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  position: fixed; 
+  top: 170px; 
+  right: 1380px; /* Seu valor */
 }
-.menu-opcoes.ativo {
-  right: 0;
-}
+  /* Certifique-se de que a CHAVE DE FECHAMENTO esteja aqui } */
+
+/* Estilo para os botões do Menu de Opções */
 .menu-opcoes button {
-  background: purple;
+  /* 1. Reset Básico */
   border: none;
-  color: white;
-  padding: 8px;
   cursor: pointer;
-  border-radius: 6px;
+  text-transform: uppercase;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px; 
+  line-height: 1; /* Garante que o texto se alinhe bem */
+
+  /* 2. Estética 3D/Push Clássica */
+  background-color: #7fff00; /* Cor principal (Verde Neon) */
+  color: #000;
+  padding: 10px 15px;
+  
+  /* Adiciona uma sombra para criar o efeito "profundidade" (pixel art 3D) */
+  box-shadow: 
+      3px 3px 0px 0px #3c7700, /* Sombra escura (profundidade) */
+      inset -1px -1px 0px 0px #000; /* Borda interna para realce */
+  
+  /* Faz a mágica do 'click' */
+  transition: all 0.05s ease;
 }
 
+/* Efeito de Clique / Hover (Essencial para UX) */
+.menu-opcoes button:hover {
+  background-color: #a8ff5c; /* Clareia um pouco ao passar o mouse */
+  box-shadow: 
+      4px 4px 0px 0px #3c7700, /* Aumenta a sombra */
+      inset -1px -1px 0px 0px #000;
+}
+
+.menu-opcoes button:active {
+  /* Efeito de PRESSIONADO */
+  transform: translate(3px, 3px); /* Move o botão para baixo e para a direita */
+  box-shadow: 
+      0px 0px 0px 0px #3c7700, /* Remove a sombra (parece que afundou) */
+      inset -1px -1px 0px 0px #000;
+}
 /* =========================
  RODAPÉ (elementos internos)
 ========================= */

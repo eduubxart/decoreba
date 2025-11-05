@@ -4,7 +4,8 @@ import { salvarRankingHistorico, atualizarTabelaRanking } from './ranking.js';
 // ======================
 // ELEMENTOS
 // ======================
-const botoes = document.querySelectorAll('.clicavel-canto-esquerdo, .clicavel-canto-direito');
+// A lista de botões que precisa ser iterável para a função aleatorio
+const botoesArray = Array.from(document.querySelectorAll('.clicavel-canto-esquerdo, .clicavel-canto-direito'));
 const controleFundo = document.querySelector('.botao-central .fundo');
 const controleTexto = document.querySelector('.botao-central p');
 const nivelElement = document.getElementById('nivel');
@@ -19,9 +20,17 @@ const btnOpcoes = document.getElementById("btn-opcoes");
 const menuOpcoes = document.getElementById("menu-opcoes");
 const blocoJogador2 = document.querySelector(".jogador:nth-child(2)");
 
+// Cria um objeto de mapeamento para facilitar o acesso aos botões por cor
+const botoes = {
+    vermelho: document.getElementById('vermelho'),
+    azul: document.getElementById('azul'),
+    amarelo: document.getElementById('amarelo'),
+    verde: document.getElementById('verde'),
+};
+
 
 // ======================
-// JOGADORES (Apenas inicializa a estrutura, os nomes serão lidos dos inputs)
+// JOGADORES, ESTADO E VARIÁVEIS DE CONFIGURAÇÃO
 // ======================
 const Jogadores = [
     { nome: recuperarNome(0) || '', sequencia: [], respostaJogador: [], pontuacao: recuperarPontuacao(0) || 0, chances: 3 },
@@ -34,6 +43,40 @@ let esperandoResposta = false;
 let podeComecar = false;
 let jogoIniciado = false;
 let modoDeJogo = "duo"; 
+
+// Constantes de Tempo
+const TEMPO_ATIVO = 400; // Tempo em que o botão fica aceso/ativo
+const TEMPO_ENTRE_FLASH = 600; // Tempo de pausa entre os flashes da sequência
+const TEMPO_FEEDBACK = 1200; // Tempo que a mensagem 'Acertou/Errou' fica na tela
+
+
+// ===================================
+// 🚨 INTEGRAÇÃO DE ÁUDIO 🚨
+// ===================================
+
+// Sons de Feedback (Ajuste os nomes dos arquivos aqui)
+const SonsFeedback = {
+    acerto: new Audio('/acerto.mp3'), 
+    erro: new Audio('/erro.mp3'),     
+};
+
+// Sons da Sequência (Ajuste os caminhos para o seu .wav)
+const Sons = {
+    vermelho: new Audio('/vermelho.mp3'),
+    azul: new Audio('/azul.mp3'),
+    amarelo: new Audio('/amarelo.mp3'),
+    verde: new Audio('/verde.mp3'),
+};
+
+// Função auxiliar para tocar o som e reiniciar (Evita que o áudio seja cortado)
+const tocarSom = (cor) => {
+    const audio = Sons[cor];
+    if (audio) {
+        audio.currentTime = 0; 
+        audio.play().catch(e => console.error("Erro ao tocar áudio:", e)); 
+    }
+};
+
 
 // ======================
 // FUNÇÕES AUXILIARES
@@ -64,7 +107,7 @@ const atualizarPontuacaoNaTela = () => {
 // ======================
 // MENSAGEM DO JOGADOR
 // ======================
-const mostrarMensagemJogador = (index, duracao = 1200) => {
+const mostrarMensagemJogador = (index, duracao = TEMPO_FEEDBACK) => {
     const jogador = Jogadores[index];
     if (!mensagemJogador || jogador.chances <= 0) return;
     
@@ -84,6 +127,10 @@ const mostrarSequencia = (i = 0) => {
 
     setTimeout(() => {
         botao.classList.add('ativo');
+        
+        // 🚨 INTEGRAÇÃO 1: Toca o som quando o CPU acende o botão
+        tocarSom(botao.id); 
+        
         setTimeout(() => {
             botao.classList.remove('ativo');
             if (i + 1 < jogador.sequencia.length) mostrarSequencia(i + 1);
@@ -92,14 +139,15 @@ const mostrarSequencia = (i = 0) => {
                 if (controleFundo) controleFundo.style.backgroundColor = 'purple';
                 if (controleTexto) controleTexto.innerText = 'Jogue!';
             }
-        }, 600);
-    }, 600);
+        }, TEMPO_ATIVO);
+    }, TEMPO_ENTRE_FLASH); // Usa o tempo entre flashes
 };
 
 const novaRodada = () => {
     const jogador = Jogadores[jogadorAtual];
     
     if (jogador.chances <= 0) {
+        // Se o jogador atual não tem mais chances, a verificação vai alternar para o próximo.
         verificarRespostas(); 
         return;
     }
@@ -108,7 +156,7 @@ const novaRodada = () => {
     if (controleFundo) controleFundo.style.backgroundColor = 'gray';
     if (controleTexto) controleTexto.innerText = 'Aguarde';
     
-    jogador.sequencia.push(aleatorio(Array.from(botoes)));
+    jogador.sequencia.push(aleatorio(botoesArray)); // Use botoesArray para o aleatorio
     
     nivel = jogador.sequencia.length; 
     if (nivelElement) nivelElement.innerText = nivel;
@@ -122,14 +170,25 @@ const verificarRespostas = () => {
     esperandoResposta = false;
     
     if (jogador.chances > 0) {
-        const acertouTudo = jogador.respostaJogador.every((res, i) => res.id === jogador.sequencia[i].id);
+        const acertouTudo = jogador.respostaJogador.length === jogador.sequencia.length &&
+                           jogador.respostaJogador.every((res, i) => res.id === jogador.sequencia[i].id);
 
         if (acertouTudo) {
             jogador.pontuacao++;
+            
+            // 🚨 INTEGRAÇÃO 3A: Som de Acerto!
+            SonsFeedback.acerto.currentTime = 0;
+            SonsFeedback.acerto.play().catch(e => console.warn("Acerto: Erro ao tocar áudio."));
+
             if (controleFundo) controleFundo.style.backgroundColor = 'green';
             if (controleTexto) controleTexto.innerText = 'Acertou!';
         } else {
             jogador.chances--;
+            
+            // 🚨 INTEGRAÇÃO 3B: Som de Erro!
+            SonsFeedback.erro.currentTime = 0;
+            SonsFeedback.erro.play().catch(e => console.warn("Erro: Erro ao tocar áudio."));
+
             if (controleFundo) controleFundo.style.backgroundColor = 'red';
             if (controleTexto) controleTexto.innerText = `Errou!`;
 
@@ -141,24 +200,28 @@ const verificarRespostas = () => {
 
     atualizarPontuacaoNaTela();
 
-    const ambosPerderam = Jogadores.every(j => j.chances <= 0);
+    const ambosPerderam = Jogadores.every(j => j.chances <= 0 || (modoDeJogo === 'solo' && j.id === 1));
     if (ambosPerderam) {
         if (controleFundo) controleFundo.style.backgroundColor = 'gray';
         if (controleTexto) controleTexto.innerText = ' GAME OVER ';
         salvarRankingFinal();
         jogoIniciado = false;
-        setTimeout(reiniciarJogo, 2000);
+        setTimeout(reiniciarJogo, TEMPO_FEEDBACK);
         return;
     }
 
+    // Lógica de alternância (Pula jogadores que perderam)
+    let proximoJogador = jogadorAtual;
     let tentativaMaxima = 0;
 
     do {
-        jogadorAtual = (jogadorAtual + 1) % Jogadores.length;
+        proximoJogador = (proximoJogador + 1) % Jogadores.length;
         tentativaMaxima++;
-    } while (Jogadores[jogadorAtual].chances <= 0 && tentativaMaxima < Jogadores.length);
+    } while (Jogadores[proximoJogador].chances <= 0 && tentativaMaxima < Jogadores.length);
     
-    setTimeout(novaRodada, 1200);
+    jogadorAtual = proximoJogador;
+
+    setTimeout(novaRodada, TEMPO_FEEDBACK);
 };
 
 const clicarBotao = botao => {
@@ -167,16 +230,25 @@ const clicarBotao = botao => {
     
     if (jogador.chances <= 0) return; 
     
+    // 🚨 INTEGRAÇÃO 2: Toca o som quando o jogador clica
+    tocarSom(botao.id); 
+
     jogador.respostaJogador.push(botao);
     botao.classList.add('ativo');
-    setTimeout(() => botao.classList.remove('ativo'), 400);
+    setTimeout(() => botao.classList.remove('ativo'), 150);
 
     const idx = jogador.respostaJogador.length - 1;
     
-    if (jogador.respostaJogador[idx].id !== jogador.sequencia[idx].id || jogador.respostaJogador.length === jogador.sequencia.length) {
+    // Verifica se o clique está INCORRETO ou se a sequência inteira foi completada
+    if (jogador.respostaJogador[idx].id !== jogador.sequencia[idx].id || 
+        jogador.respostaJogador.length === jogador.sequencia.length) {
         verificarRespostas();
     }
 };
+
+// ... (Restante das funções: reiniciarJogo, iniciarJogo, etc.) ...
+// O restante do seu código (reiniciarJogo, iniciarJogo, eventos) permanece praticamente o mesmo,
+// pois a lógica de áudio foi integrada nas funções de estado (mostrarSequencia, verificarRespostas, clicarBotao).
 
 // ======================
 // REINICIAR JOGO
@@ -208,11 +280,18 @@ const reiniciarJogo = () => {
     
     // CORREÇÃO: Mostrar campos de nome novamente, VAZIOS e limpar exibição lateral
     if (addNome1) { addNome1.style.display = 'block'; addNome1.value = ''; }
+    
     if (addNome2) { 
-        addNome2.style.display = (modoDeJogo === 'duo') ? 'block' : 'none';
+        const isDuo = modoDeJogo === 'duo';
+        addNome2.style.display = isDuo ? 'block' : 'none';
         addNome2.value = '';
     }
 
+    if (blocoJogador2) {
+        const isSolo = modoDeJogo === 'solo';
+        blocoJogador2.style.display = isSolo ? 'none' : 'block';
+    }
+    
     document.getElementById(`nome-lateral-jogador-1`).textContent = '';
     document.getElementById(`nome-lateral-jogador-2`).textContent = '';
     
@@ -224,13 +303,15 @@ const reiniciarJogo = () => {
 // INICIAR JOGO
 // ======================
 const iniciarJogo = () => {
+    // ... (Lógica de validação de nomes) ...
+
     const nomes = [addNome1?.value.trim() || '', addNome2?.value.trim() || ''];
     const numJogadoresAtivos = modoDeJogo === 'solo' ? 1 : Jogadores.length;
 
     // VALIDAÇÃO CRUCIAL
     for (let i = 0; i < numJogadoresAtivos; i++) {
         if (!nomes[i]) return alert(`Preencha o nome do Jogador ${i + 1}!`);
-        if (nomes[i].length > 4) return alert("Máx. 4 letras por nome!");
+        if (nomes[i].length > 8) return alert("Máx. 8 letras por nome!");
     }
     
     // Configuração de inputs e jogadores
@@ -263,6 +344,7 @@ const iniciarJogo = () => {
 
     mostrarMensagemJogador(jogadorAtual);
     setTimeout(novaRodada, 1300);
+    
 };
 
 // ======================
@@ -273,7 +355,7 @@ const salvarRankingFinal = () => {
 };
 
 // ======================
-// EVENTOS E OPÇÕES
+// EVENTOS E OPÇÕES (Sem alterações)
 // ======================
 if (controleFundo) controleFundo.onclick = () => { 
     const textoControle = controleTexto.innerText.trim();
@@ -282,7 +364,7 @@ if (controleFundo) controleFundo.onclick = () => {
     }
 };
 
-botoes.forEach(botao => {
+botoesArray.forEach(botao => {
     botao.onclick = () => clicarBotao(botao);
     botao.onmouseenter = () => botao.classList.add('hover');
     botao.onmouseleave = () => botao.classList.remove('hover');
@@ -325,7 +407,7 @@ document.getElementById("modo-duo").addEventListener("click", () => {
 
 
 // ======================
-// INICIALIZAÇÃO DA PÁGINA
+// INICIALIZAÇÃO DA PÁGINA (Sem alterações)
 // ======================
 // 1. Define o modo de jogo inicial e visibilidade do bloco, baseado no último modo jogado.
 if (recuperarNome(1)) {
@@ -343,6 +425,7 @@ if (addNome2) {
     addNome2.style.display = (modoDeJogo === 'duo') ? 'block' : 'none';
     addNome2.value = '';
 }
+if (blocoJogador2) blocoJogador2.style.display = (modoDeJogo === 'solo') ? 'none' : 'block';
 
 // 3. Nomes laterais e status do jogo são resetados
 document.getElementById(`nome-lateral-jogador-1`).textContent = '';

@@ -19,7 +19,7 @@ export function salvarRankingHistorico(jogadores) {
     });
 
     ranking.sort((a, b) => b.pontuacao - a.pontuacao);
-    ranking = ranking.slice(0, 8); // Mantém os 8 melhores
+    ranking = ranking.slice(0, 5); // Mantém os 5 melhores
 
     localStorage.setItem(RANKING_KEY, JSON.stringify(ranking));
 
