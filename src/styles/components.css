@@ -92,10 +92,10 @@
   pointer-events: none;
 }
 
-.vermelho::after { background-image: url("../assets/img/icone-vermelho.png"); }
-.azul::after { background-image: url("../assets/img/icone-azul.png"); }
-.amarelo::after { background-image: url("../assets/img/icone-amarelo.png"); }
-.verde::after { background-image: url("../assets/img/icone-verde.png"); }
+.vermelho::after { background-image: url("/img/icone-vermelho.png"); }
+.azul::after { background-image: url("/img/icone-azul.png"); }
+.amarelo::after { background-image: url("/img/icone-amarelo.png"); }
+.verde::after { background-image: url("/img/icone-verde.png"); }
 
 .clicavel-canto-esquerdo.ativo, .clicavel-canto-direito.ativo {
   filter: brightness(2);
