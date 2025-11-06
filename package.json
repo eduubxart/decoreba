@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "vite": "^5.4.10"
+    "vite": "5.4.11"
   },
   "engines": {
     "node": ">=18.0.0"
