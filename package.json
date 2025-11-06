@@ -16,10 +16,10 @@
   ],
   "author": "Eduardo Faria Braga",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "vite": "5.4.11"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
   }
